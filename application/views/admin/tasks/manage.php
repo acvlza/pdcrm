@@ -7,7 +7,7 @@
                 <?php if (has_permission('tasks', '', 'create')) { ?>
                 <a href="#" onclick="new_task(<?php if ($this->input->get('project_id')) {
     echo "'" . admin_url('tasks/task?rel_id=' . $this->input->get('project_id') . '&rel_type=project') . "'";
-} ?>); return false;" class="btn btn-primary pull-left new">
+} ?>); return false;" class="btn btn-default pull-left new">
                     <i class="fa-regular fa-plus tw-mr-1"></i>
                     <?php echo _l('new_task'); ?>
                 </a>
@@ -33,7 +33,7 @@
                 <?php } else { ?>
                 <?php $this->load->view('admin/tasks/tasks_filter_by', ['view_table_name' => '.table-tasks']); ?>
                 <a href="<?php echo admin_url('tasks/detailed_overview'); ?>"
-                    class="btn btn-success pull-right mright5"><?php echo _l('detailed_overview'); ?></a>
+                    class="btn btn-default pull-right mright5"><?php echo _l('detailed_overview'); ?></a>
                 <?php } ?>
             </div>
         </div>

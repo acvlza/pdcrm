@@ -45,7 +45,6 @@ function get_tasks_priorities()
             'id'    => 1,
             'name'  => _l('task_priority_low'),
             'color' => '#777',
-
         ],
         [
             'id'    => 2,

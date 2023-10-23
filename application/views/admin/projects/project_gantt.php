@@ -3,61 +3,55 @@
     <div class="col-md-12">
         <?php if (count($gantt_data) > 0) { ?>
             <div class="form-group pull-right">
-                <select class="selectpicker" name="gantt_view">
-                    <option value="Day"><?php echo _l('gantt_view_day'); ?></option>
+                <select class="selectpicker" name="gantt_view" id="gantt_view">
+                    <option value="Day" selected><?php echo _l('gantt_view_day'); ?></option>
                     <option value="Week"><?php echo _l('gantt_view_week'); ?></option>
-                    <option value="Month" selected><?php echo _l('gantt_view_month'); ?></option>
+                    <option value="Month"><?php echo _l('gantt_view_month'); ?></option>
                     <option value="Year"><?php echo _l('gantt_view_year'); ?></option>
                 </select>
             </div>
         <?php } else { ?>
             <p><?php echo _l('no_tasks_found'); ?></p>
         <?php } ?>
-        <div class="form-group pull-right mright10">
-            <select class="selectpicker" name="gantt_type" onchange="gantt_filter();">
-                <option value="milestones" <?php if (!$this->input->get('gantt_type') || $this->input->get('gantt_type') == 'milestones') {
-                                                echo ' selected';
-                                            } ?>><?php echo _l('project_milestones'); ?></option>
-                <option value="members" <?php if ($this->input->get('gantt_type') == 'members') {
-                                            echo ' selected';
-                                        } ?>>
-                    <?php
-                    if (has_permission('tasks', '', 'view') || (!has_permission('tasks', '', 'view') && get_option('show_all_tasks_for_project_member') == 1)) {
-                        echo _l('project_members');
-                    } else {
-                        echo _l('home_my_tasks');
-                    } ?>
-                </option>
-                <option value="status" <?php if ($this->input->get('gantt_type') == 'status') {
-                                            echo ' selected';
-                                        } ?>><?php echo _l('task_status'); ?></option>
-            </select>
-        </div>
-        <div class="form-group pull-right mright10">
-            <select class="selectpicker" name="gantt_task_status" onchange="gantt_filter(this);" data-none-selected-text="<?php echo _l('task_status'); ?>">
-                <option value=""><?php echo _l('task_list_all'); ?></option>
-                <?php foreach ($task_statuses as $status) { ?>
-                    <option value="<?php echo $status['id']; ?>" <?php if ($this->input->get('gantt_task_status') == $status['id']) {
-                                                                        echo ' selected';
-                                                                    } ?>>
-                        <?php echo $status['name']; ?>
-                    </option>
-                <?php } ?>
-            </select>
-        </div>
+
     </div>
 </div>
 <div class="clearfix"></div>
-<svg id="gantt"></svg>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+<div class="gantt-target"></div>
 
-        var gantt_data = <?php echo json_encode($gantt_data); ?>;
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/frappe-gantt/0.6.0/frappe-gantt.min.js'></script>
 
-        if (gantt_data.length > 0) {
-            var gantt = new Gantt("#gantt", gantt_data, {
+      <script id="rendered-js" >
+ document.addEventListener('DOMContentLoaded', function() {
+
+(function () {
+  tasks.forEach(task => {
+    task.children = gantt_chart.get_all_dependent_tasks(task.id);
+    task.display = "";
+    task.parent = "";
+    task.collapsed = "";
+  });
+  let tasks_all = {};
+  gantt_chart.tasks.forEach(item => {
+    tasks_all[item.id] = item;
+  });
+  gantt_chart.tasks_all = tasks_all;
+  gantt_chart.parents = [];
+  gantt_chart.tasks_to_display = gantt_chart.tasks;
+})();	 
+	 
+	 
+  collapseAll(); 
+
+
+  });
+
+        var tasks = <?php echo json_encode($gantt_data); ?>;
+
+       // if (gantt_data.length > 0) {
+            var gantt_chart = new Gantt(".gantt-target", tasks, {
                 view_modes: ['Day', 'Week', 'Month', 'Year'],
-                view_mode: 'Month',
+                view_mode: 'Day',
                 date_format: 'YYYY-MM-DD',
                 popup_trigger: 'click mouseover',
                 on_date_change: function(data, start, end) {
@@ -68,22 +62,177 @@
                         });
                     }
                 },
-                on_click: function(data) {
-                    if (typeof(data.task_id) != 'undefined') {
-                        init_task_modal(data.task_id);
+                on_click: function(task) {
+					toggleBars(task);
+                    if (typeof(task.task_id) != 'undefined') {
+                        init_task_modal(task.task_id);
                     }
                 }
             });
+			
+var selector = document.getElementById("gantt_view");
 
-            $('body').on('mouseleave', '.grid-row', function() {
-                gantt.hide_popup();
-            })
+selector.addEventListener("change", function(el) {
+let view = $(el.target).val();
+gantt_chart.change_view_mode(view);
+});
+/*
+           jQuery('body').on('mouseleave', '.grid-row', function() {
+                gantt_chart.hide_popup();
+            })*/
 
-            $('select[name$="gantt_view"').change(function(el) {
-                let view = $(el.target).val();
-                gantt.change_view_mode(view);
-            })
-        }
+       // }
 
+/*
+jQuery('select[name$="gantt_view"').change(function(el) {
+let view = $(el.target).val();
+gantt_chart.change_view_mode(view);
+})*/
+
+	
+
+
+function toggleBars(task) {
+  let children = task.children;
+
+  let index = gantt_chart.parents.indexOf(task.id);
+  index === -1 ? gantt_chart.parents.push(task.id) : gantt_chart.parents.splice(index, 1);
+
+  gantt_chart.tasks_to_display.map(item => {
+    let indexChild = children.indexOf(item.id);
+    if (indexChild !== -1) {
+      if (!item.display && !item.parent) {
+        item.display = "none";
+        item.parent = task.id;
+      } else if (!item.display && item.parent) {
+        item.display = item.display;
+        item.parent = item.parent;
+      } else if (item.display && item.parent !== task.id) {
+        item.display = item.display;
+        item.parent = item.parent;
+      } else {
+        item.display = "";
+        item.parent = "";
+      }
+    } else if (item.id === task.id) {
+      item.collapsed = !item.collapsed ? true : "";
+    } else if (item.id !== task.id) {
+      item.collapsed = item.collapsed;
+    }
+
+    gantt_chart.tasks_all[item.id] = item;
+
+    return item;
+  });
+
+  gantt_chart.refresh(gantt_chart.tasks_to_display.filter(task => !task.display));
+
+  let check = gantt_chart.tasks_to_display.length !== gantt_chart.tasks.length;
+  gantt_chart.parents = !check ? [] : gantt_chart.parents;
+
+  toggleClassBars(check);
+}
+
+// add or remove class to element bar
+function toggleClassBars(check) {
+  document.querySelectorAll('.bar-wrapper').
+  forEach(el => gantt_chart.parents.indexOf(el.dataset.id) !== -1 && check ?
+  el.classList.add('parent') : el.classList.remove('parent'));
+
+}
+
+function collapseAll() {
+  let tasks = gantt_chart.tasks_to_display ? gantt_chart.tasks_to_display : gantt_chart.tasks;
+  tasks.map(task => {
+    if (!task.collapsed) {
+      toggleBars(task);
+    }
+  });
+}
+
+function expandBars(task) {
+  let tasks = gantt_chart.tasks_to_display ? gantt_chart.tasks_to_display : gantt_chart.tasks;
+  let tasks_to_display;
+
+  if (!task) {
+    tasks_to_display = tasks.map(item => {
+      item.display = "";
+      item.parent = "";
+      item.collapsed = "";
+      gantt_chart.tasks_all[item.id] = item;
+      return item;
     });
+    gantt_chart.parents = [];
+  } else {
+    let index = gantt_chart.parents.indexOf(task.id);
+    if (task.collapsed && index !== -1)
+    gantt_chart.parents.splice(index, 1);
+
+    tasks_to_display = tasks.map(item => {
+      if (task.children.indexOf(item.id) !== -1) {
+        index = gantt_chart.parents.indexOf(item.id);
+        if (index !== -1) gantt_chart.parents.splice(index, 1);
+
+        item.display = "";
+        item.parent = "";
+        item.collapsed = "";
+      } else if (task.id === item.id) {
+        item.display = "";
+        item.parent = "";
+        item.collapsed = "";
+      } else {
+        item.display = item.display;
+        item.parent = item.parent;
+        item.collapsed = item.collapsed;
+      }
+
+      gantt_chart.tasks_all[item.id] = item;
+
+      return item;
+    });
+  }
+
+  gantt_chart.tasks_to_display = tasks_to_display;
+  let check = gantt_chart.tasks_to_display.length !== gantt_chart.tasks.length;
+  gantt_chart.refresh(tasks_to_display.filter(task => !task.display));
+
+  toggleClassBars(check);
+}
+
+// mousedown event to capture gantt_chart property "bar_being_dragged" 
+document.addEventListener("mousedown", handleMouseDown, false);
+
+document.querySelector('.js-view').addEventListener('click', changeView, false);
+
+function handleMouseDown(event) {
+  if (!event.target.parentNode.classList.contains('bar-group')) return;
+
+  let taskId = gantt_chart.bar_being_dragged;
+  let task = gantt_chart.get_task(taskId);
+
+  let children = task.children.
+  map(item => gantt_chart.tasks_all[item]).
+  filter(item => item.collapsed);
+
+  if (task.collapsed) {
+    expandBars(task);
+  } else if (!task.collapsed && children.length >= 1) {
+    children.forEach(item => expandBars(item));
+  }
+}
+
+function changeView(event) {
+  event.target.parentNode.childNodes.forEach(childNode => {
+    let view = event.target.dataset.view;
+    if (childNode.tagName === "BUTTON") {
+      if (childNode.dataset.view === view) {
+        gantt_chart.change_view_mode(view);
+        childNode.classList.add("selected");
+      } else {
+        childNode.classList.remove("selected");
+      }
+    }
+  });
+}	
+	
 </script>

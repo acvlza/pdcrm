@@ -382,9 +382,9 @@ function get_project_milestone_schedule_inscope($project_id)
 
     // Group tasks by milestone ID
     foreach ($tasks as $task) {
-        $milestoneTasks[$task['milestone_id']][] = $task;
+        $milestoneTasks[$task['milestone']][] = $task;
     }
-
+//print_r($milestoneTasks);exit;
     $result = '';
 
     foreach ($milestones as $milestone) {
@@ -392,19 +392,63 @@ function get_project_milestone_schedule_inscope($project_id)
         $formattedStartDate = date('M, d, y', strtotime($milestone['start_date']));
         $formattedDueDate = date('M, d, y', strtotime($milestone['due_date']));
         $schedule = $formattedStartDate . ' - ' . $formattedDueDate;
+        $milestone_description=$milestone['description'];
+        
+        $milestone_final_deliverables=$milestone['final_deliverables'];
+        $milestone_approval=$milestone['approval'];
+		
+/*approval
+0 = Pending
+1 = Approved
+2 = Revise
+*/
 
+if($milestone_approval=='Pending'){
+$status='Pending';
+$btype = 'info';
+$row_color = '#e9f2ef';
+}elseif($milestone_approval=='Approved'){
+$status = 'Approved';
+$btype = 'success';
+$row_color = '#eaf6ff';
+}elseif($milestone_approval=='Declined'){
+$status= 'Declined';
+$btype = 'danger';
+$row_color = '#feacc4';
+}  
+
+$display_status = '<div class="dropdown">
+  <button style="padding:2px 10px;border:0;" class="btn btn-'.$btype.' dropdown-toggle" type="button" data-toggle="dropdown">'.$status.'
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="javascript:void(0);" onclick="approve_milestone('.$milestone['id'].');"><i class="fa fa-check green-color" aria-hidden="true"></i> Approve</a></li>
+    <li><a href="javascript:void(0);" onclick="decline_milestone('.$milestone['id'].');"><i class="fa fa-refresh red-color" aria-hidden="true"></i> Decline</a></li>
+    </ul>
+</div>';		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         // Retrieve tasks linked to the current milestone
         $milestoneId = $milestone['id'];
         $linkedTasks = isset($milestoneTasks[$milestoneId]) ? $milestoneTasks[$milestoneId] : [];
+        
 
         // Generate a comma-separated list of task names
         $taskNames = array_column($linkedTasks, 'name');
         $taskList = implode(', ', $taskNames);
-
         // Append each milestone name, associated tasks, and schedule in a separate <tr> element
         $result .= '<tr>';
         $result .= '<td>' . $milestone['name'] . '</td>';
         $result .= '<td>' . $taskList . '</td>';
+        $result .= '<td>' . $milestone_description . '</td>';
+        $result .= '<td>' . $milestone_final_deliverables . '</td>';
+        $result .= '<td>' . $display_status . '</td>';
         $result .= '<td>' . $schedule . '</td>';
         $result .= '</tr>';
     }

@@ -1,0 +1,45 @@
+nav {
+  background: #0A1A8F !important;
+}
+nav  a{
+  color: #fff !important;
+}
+
+body {
+  background: #18192d;
+}
+h2, h1 {
+  color: #9ba1c4;
+}
+ul.dropdown-menu.fadeIn li a {
+  color: #333 !important;
+
+}
+.navbar-default {
+  border:none;
+}
+
+li a:hover,
+li.active a {
+  color: #9ba1c4 !important;
+}
+
+body.appointments-external-form label {
+  color: #9ba1c4;
+}
+.login_icon {
+  display: none;
+}
+
+h1,h2,h3,h4,h5,h6,b, a > span{
+  color: #9ba1c4 !important;
+}
+
+/* chat */
+.msg p {
+  font-size: 0.9rem !important;
+}
+
+.circle-unseen {
+  margin-top: 0 !important;
+}

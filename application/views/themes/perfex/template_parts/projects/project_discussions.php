@@ -2,8 +2,8 @@
 <?php if (!isset($discussion)) {
     if ($project->settings->open_discussions == 1) { ?>
 <a href="#" onclick="new_discussion();return false;"
-    class="btn btn-primary mtop5"><?php echo _l('new_project_discussion'); ?></a>
-<hr />
+    class="btn btn-default mtop5"><?php echo _l('new_project_discussion'); ?></a>
+<hr style="Border : 1px solid #323761" />
 <!-- Miles Stones -->
 <div class="modal fade" id="discussion" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _l('close'); ?></button>
-                <button type="submit" class="btn btn-primary" data-loading-text="<?php echo _l('wait_text'); ?>"
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?php echo _l('close'); ?></button>
+                <button type="submit" class="btn btn-default" data-loading-text="<?php echo _l('wait_text'); ?>"
                     data-autocomplete="off" data-form="#discussion_form"><?php echo _l('submit'); ?></button>
             </div>
         </div>
@@ -92,4 +92,11 @@
 <p><?php echo $discussion->description; ?></p>
 <hr />
 <div id="discussion-comments" class="tc-content"></div>
+
 <?php } ?>
+<script>
+$( document ).ready(function() {
+setTimeout(() => { $(".commenting-field").appendTo($(".data-container")); }, 500);
+
+});
+</script>

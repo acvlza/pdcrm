@@ -13,6 +13,14 @@
         padding-left: 280%;
     }
 
+    .label {
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+
+
 </style>
 
 <h3 id="greeting" class="tw-font-semibold tw-mt-0"></h3>

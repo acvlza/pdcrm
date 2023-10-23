@@ -395,6 +395,8 @@ class Clients extends ClientsController
                 $data['total_tasks']                  = $total_tasks;
                 $data['tasks_not_completed_progress'] = ($total_tasks > 0 ? number_format(($data['tasks_completed'] * 100) / $total_tasks, 2) : 0);
                 $data['tasks_not_completed_progress'] = round($data['tasks_not_completed_progress'], 2);
+                $data['gantt_data'] = (new Gantt($id, 'milestones'))->excludeMilestonesFromCustomer()->get();
+                $data['milestones'] = $this->projects_model->get_milestones($id, ['hide_from_customer' => 0]);
             } elseif ($group == 'new_task') {
                 if ($project->settings->create_tasks == 0) {
                     redirect(site_url('clients/project/' . $project->id));
@@ -440,8 +442,17 @@ class Clients extends ClientsController
                         $whereInvoices['status !='] = 6;
                     }
                     $data['invoices'] = $this->invoices_model->get('', $whereInvoices);
+
                 }
-            } elseif ($group == 'project_tickets') {
+            }elseif ($group == 'project_meetings') {
+               $data['meetings'] = [];
+			   $this->db->where(['project_id'=>$id]);
+               $data['meetings'] = $this->db->get(db_prefix() . 'scheduled_meetings')->result_array();
+                   
+                
+            }
+
+			elseif ($group == 'project_tickets') {
                 $data['tickets'] = [];
                 if (has_contact_permission('support')) {
                     $where_tickets = [

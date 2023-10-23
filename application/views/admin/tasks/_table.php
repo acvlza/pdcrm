@@ -1,6 +1,6 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
+
 
 $table_data = [
     _l('the_number_sign'),
@@ -22,7 +22,7 @@ array_unshift($table_data, [
 ]);
 
 $custom_fields = get_custom_fields('tasks', [
-    'show_on_table' => 1,
+    'show_on_table' => 1, 
 ]);
 
 foreach ($custom_fields as $field) {
@@ -38,3 +38,4 @@ render_datatable($table_data, 'tasks', ['number-index-' . isset($bulk_actions) ?
         'data-last-order-identifier' => 'tasks',
         'data-default-order'         => get_table_last_order('tasks'),
 ]);
+

@@ -2,22 +2,25 @@
   fill: none; }
 
 .gantt .grid-header {
-  fill: #ffffff;
-  stroke: #e0e0e0;
-  stroke-width: 1.4; }
+  fill: rgba(93, 91, 133, 0.56);
+  stroke: #323761;
+  stroke-width: 1.4;
+  }
 
 .gantt .grid-row {
-  fill: #ffffff; }
+  fill: #2c2e53;
+  }
 
 .gantt .grid-row:nth-child(even) {
-  fill: #f5f5f5; }
+  fill: #3a3d6d !important;
+  }
 
 .gantt .row-line {
-  stroke: #ebeff2; }
+  stroke: #323761; }
 
 .gantt .tick {
   stroke: #e0e0e0;
-  stroke-width: 0.2; }
+  stroke-width: 0.1; }
   .gantt .tick.thick {
     stroke-width: 0.4; }
 
@@ -27,26 +30,29 @@
 
 .gantt .arrow {
   fill: none;
-  stroke: #666;
+  stroke: #9ba1c4;
   stroke-width: 1.4; }
 
 .gantt .bar {
   fill: #b8c2cc;
-  stroke: #8D99A6;
+  stroke: #0923E3;
   stroke-width: 0;
   transition: stroke-width .3s ease;
-  user-select: none; }
+  user-select: none;
+  }
 
 .gantt .bar-progress {
   fill: #a3a3ff; }
 
 .gantt .bar-invalid {
   fill: transparent;
-  stroke: #8D99A6;
-  stroke-width: 1;
-  stroke-dasharray: 5; }
+  stroke: #9ba1c4;
+  stroke-width: .5;
+  stroke-dasharray: 3;
+  }
   .gantt .bar-invalid ~ .bar-label {
-    fill: #555; }
+    fill: #9ba1c4;
+    }
 
 .gantt .bar-label {
   fill: #fff;
@@ -76,7 +82,8 @@
     visibility: visible;
     opacity: 1; }
   .gantt .bar-wrapper.active .bar {
-    fill: #a9b5c1; }
+    fill: #0923E3;
+    }
   .gantt .bar-wrapper.active .bar-progress {
     fill: #8a8aff; }
 
@@ -101,12 +108,12 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(	9, 35, 227, 0.8);
     padding: 0;
-    color: #959da5;
+    color: #9ba1c4;
     border-radius: 3px; }
     .gantt-container .popup-wrapper .title {
-      border-bottom: 3px solid #a3a3ff;
+      border-bottom: 3px solid #9ba1c4;
       padding: 10px; }
     .gantt-container .popup-wrapper .subtitle {
       padding: 10px;
@@ -116,4 +123,4 @@
       height: 5px;
       margin: 0 0 0 -5px;
       border: 5px solid transparent;
-      border-top-color: rgba(0, 0, 0, 0.8); }
+      border-top-color: rgba(	9, 35, 227, 0.8) }

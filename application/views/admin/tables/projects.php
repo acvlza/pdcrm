@@ -107,7 +107,7 @@ foreach ($rResult as $aRow) {
 
     $row[] = '<a href="' . admin_url('clients/client/' . $aRow['clientid']) . '">' . $aRow['company'] . '</a>';
 
-    $row[] = render_tags($aRow['tags']);
+    //$row[] = render_tags($aRow['tags']);
 
     $row[] = _d($aRow['start_date']);
 
@@ -134,10 +134,65 @@ foreach ($rResult as $aRow) {
 
     $membersOutput .= '<span class="hide">' . trim($exportMembers, ', ') . '</span>';
     $membersOutput .= '</div>';
-    $row[] = $membersOutput;
+   // $row[] = $membersOutput;
+    
+//==========================================
+                                $currentDate = date('Y-m-d'); // Get the current system date
 
-    $status = get_project_status_by_id($aRow['status']);
-    $row[]  = '<span class="label project-status-' . $aRow['status'] . '" style="color:' . $status['color'] . ';border:1px solid ' . adjust_hex_brightness($status['color'], 0.4) . ';background: ' . adjust_hex_brightness($status['color'], 0.04) . ';">' . $status['name'] . '</span>';
+                                $milestones = get_project_milestones($aRow['id']);
+                                $nearestMilestone = null; // Variable to store the nearest milestone
+
+                                foreach ($milestones as $milestone) {
+                                    $startDate = $milestone['start_date'];
+                                    $dueDate = $milestone['due_date'];
+
+                                    if ($currentDate >= $startDate && $currentDate <= $dueDate) {
+                                // Condition 1: If the current date is within the range of milestone start and due date
+                                       $nearestMilestone  = $milestone['name'] ;
+                                    } elseif ($currentDate < $startDate) {
+                                // Condition 2: If the current date is before the milestone start date
+                                        if ($nearestMilestone === null || $startDate < $nearestMilestone['start_date']) {
+                                            $nearestMilestone = $milestone;
+                                        }
+                                    }
+                                }
+
+                            
+                             $row[]  = $nearestMilestone;
+                             
+//--------------------------------------------------------------------------   
+$CI =  &get_instance();
+$CI->db->where('id', $aRow['id']);
+$_result = $CI->db->get(db_prefix() . 'projects')->row();
+$progress = $_result->progress;
+  /*                     
+$row[] = '<div class="progress tw-h-6 align-middle" style="margin-bottom:0px;"><div class="progress-bar progress-bar-success not-dynamic" role="progressbar" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$progress.'%; position: relative;" data-percent="'.$progress.'"></div></div>';     */
+                  
+$row[]='<div class="progress">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$progress.'%;">
+        <span>'.$progress.'%</span>
+    </div>
+</div>
+'; 
+                           
+//============================================
+    
+$status = get_project_status_by_id($aRow['status']);
+
+// Determine the label style based on the task status
+$labelClasses = [
+    1 => "label label-default",
+    2 => "label label-info tw-ml-3",
+    3 => "label label-warning",
+    4 => "label label-primary tw-ml-3",
+    5 => "label label-success"
+];
+
+$currentClass = isset($labelClasses[$aRow['status']]) ? $labelClasses[$aRow['status']] : "label"; // default to "label" if no class is set for the status
+
+// Construct the row data
+$row[] = '<span class="' . $currentClass . ' project-status-' . $aRow['status'] . '">' . $status['name'] . '</span>';
+
 
     // Custom fields add values
     foreach ($customFieldsColumns as $customFieldColumn) {

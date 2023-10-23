@@ -2067,7 +2067,7 @@ $lang['project_total_rate']                                  = 'Project Cost';
 $lang['project_members']                                     = 'Members';
 $lang['project_member_removed']                              = 'Project member removed successfully';
 $lang['project_overview']                                    = 'Overview';
-$lang['project_gant']                                        = 'Gantt';
+$lang['project_gant']                                        = 'Progress Tracker';
 $lang['project_milestones']                                  = 'Milestones';
 $lang['project_milestone_current']                           = 'Current Milestone';
 $lang['project_milestone_order']                             = 'Order';
@@ -2594,8 +2594,8 @@ $lang['task_log_time_end']    = $lang['project_timesheet_end_time'];
 $lang['task_single_log_user'] = $lang['project_timesheet_user'];
 
 # Version 1.2.2
-$lang['milestone_description']                  = 'Description';
-$lang['description_visible_to_customer']        = 'Show description to customer';
+$lang['milestone_description']                  = 'Requirements';
+$lang['description_visible_to_customer']        = 'Show requirements to customer';
 $lang['upcoming_tasks']                         = 'Upcoming Tasks';
 $lang['payment_credit_card_number']             = 'Card Number';
 $lang['payment_credit_card_expiration_date']    = 'Expiration Date';

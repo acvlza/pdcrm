@@ -19,33 +19,8 @@
                                 <i class="fa-solid fa-chart-gantt menu-icon"></i> <?php echo _l('home_my_projects'); ?>
                             </a>
                         </li>
-                        <li role="presentation">
-                            <a href="#home_my_reminders"
-                                onclick="initDataTable('.table-my-reminders', admin_url + 'misc/my_reminders', undefined, undefined,undefined,[2,'asc']);"
-                                aria-controls="home_my_reminders" role="tab" data-toggle="tab">
-                                <i class="fa-regular fa-clock menu-icon"></i> <?php echo _l('my_reminders'); ?>
-                                <?php
-                        $total_reminders = total_rows(
-    db_prefix() . 'reminders',
-    [
-                           'isnotified' => 0,
-                           'staff'      => get_staff_user_id(),
-                        ]
-);
-                        if ($total_reminders > 0) {
-                            echo '<span class="badge">' . $total_reminders . '</span>';
-                        }
-                        ?>
-                            </a>
-                        </li>
-                        <?php if ((get_option('access_tickets_to_none_staff_members') == 1 && !is_staff_member()) || is_staff_member()) { ?>
-                        <li role="presentation">
-                            <a href="#home_tab_tickets" onclick="init_table_tickets(true);"
-                                aria-controls="home_tab_tickets" role="tab" data-toggle="tab">
-                                <i class="fa-regular fa-life-ring menu-icon"></i> <?php echo _l('home_tickets'); ?>
-                            </a>
-                        </li>
-                        <?php } ?>
+                        
+                        
                         <?php if (is_staff_member()) { ?>
                         <li role="presentation">
                             <a href="#home_announcements" onclick="init_table_announcements(true);"

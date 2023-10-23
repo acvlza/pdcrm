@@ -395,6 +395,7 @@ function taskTable() {
   $(".tasks-phases").toggleClass("hide");
 }
 
+
 function discussion_comments(selector, discussion_id, discussion_type) {
   var defaults = _get_jquery_comments_default_config(app.lang.discussions_lang);
 

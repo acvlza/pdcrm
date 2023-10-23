@@ -33,6 +33,27 @@
                             </label>
                         </div>
                         <?php } ?>
+                        <?php 
+
+  
+              echo render_textarea('final_deliverables', 'Final Deliverables'); ?>
+                        
+
+<div class="form-group" app-field-wrapper="approval"><label for="approval" class="control-label">Approval</label><div class="dropdown bootstrap-select" style="width: 100%;">
+<select id="approval" name="approval" class="selectpicker" data-none-selected-text="Select Option" data-width="100%" data-live-search="true" tabindex="-98">
+<option value=""></option>
+<?php 
+$approvals = array('Approved', 'Declined', 'Pending');
+foreach ($approvals as $approval) {
+if ($approval == $project->approval) {$selected = ' selected';}else{$selected='';}
+echo '<option data-value="'.$approval.'" value="'.$approval.'">'.$approval.'</option>';
+}
+?>
+</select>
+</div>
+</div>
+                        
+                        
                         <?php echo render_input('milestone_order', 'project_milestone_order', total_rows(db_prefix() . 'milestones', ['project_id' => $project->id]) + 1, 'number'); ?>
                     </div>
                 </div>

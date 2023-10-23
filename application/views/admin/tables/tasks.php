@@ -134,7 +134,23 @@ foreach ($rResult as $aRow) {
     $status          = get_task_status_by_id($aRow['status']);
     $outputStatus    = '';
 
-    $outputStatus .= '<span class="label" style="color:' . $status['color'] . ';border:1px solid ' . adjust_hex_brightness($status['color'], 0.4) . ';background: ' . adjust_hex_brightness($status['color'], 0.04) . ';" task-status-table="' . $aRow['status'] . '">';
+    // Extract the task status
+$taskStatus = $aRow['status'];
+
+// Determine the label style based on the task status
+$labelClasses = [
+    1 => "label label-default",
+    2 => "label label-info tw-ml-3",
+    3 => "label label-warning",
+    4 => "label label-primary tw-ml-3",
+    5 => "label label-success",
+    6 => "label label-danger"
+];
+
+$currentClass = isset($labelClasses[$taskStatus]) ? $labelClasses[$taskStatus] : "label"; // default to "label" if no class is set for the status
+
+// Construct the $outputStatus
+$outputStatus .= '<span class="' . $currentClass . ' task-status-table="' . $aRow['status'] . '">';
 
     $outputStatus .= $status['name'];
 
@@ -173,26 +189,42 @@ foreach ($rResult as $aRow) {
     $outputPriority = '<span style="color:' . task_priority_color($aRow['priority']) . ';" class="inline-block">' . task_priority($aRow['priority']);
 
     if (has_permission('tasks', '', 'edit') && $aRow['status'] != Tasks_model::STATUS_COMPLETE) {
-        $outputPriority .= '<div class="dropdown inline-block mleft5 table-export-exclude">';
-        $outputPriority .= '<a href="#" style="font-size:14px;vertical-align:middle;" class="dropdown-toggle text-dark" id="tableTaskPriority-' . $aRow['id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-        $outputPriority .= '<span data-toggle="tooltip" title="' . _l('task_single_priority') . '"><i class="fa-solid fa-chevron-down tw-opacity-70"></i></span>';
-        $outputPriority .= '</a>';
+    $outputPriority .= '<div class="dropdown inline-block mleft5 table-export-exclude">';
+    $outputPriority .= '<a href="#" style="font-size:14px;vertical-align:middle;" class="dropdown-toggle text-dark" id="tableTaskPriority-' . $aRow['id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+    $outputPriority .= '<span data-toggle="tooltip" title="' . _l('task_single_priority') . '"><i class="fa-solid fa-chevron-down tw-opacity-70"></i></span>';
+    $outputPriority .= '</a>';
 
-        $outputPriority .= '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="tableTaskPriority-' . $aRow['id'] . '">';
-        foreach ($tasksPriorities as $priority) {
-            if ($aRow['priority'] != $priority['id']) {
-                $outputPriority .= '<li>
+    $outputPriority .= '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="tableTaskPriority-' . $aRow['id'] . '">';
+
+    foreach ($tasksPriorities as $priority) {
+        $itemStyles = "";
+    if ($priority['id'] == 1) {
+        $itemStyles = $priority['styles'];
+    }
+        $backgroundColor = "";  // default background color
+        if ($priority['name'] == 'High') {
+            $backgroundColor = "background-color: red;";
+        } elseif ($priority['name'] == 'Medium') {
+            $backgroundColor = "background-color: yellow;";
+        } elseif ($priority['name'] == 'Low') {
+            $backgroundColor = "background-color: green;";
+        }
+
+        if ($aRow['priority'] != $priority['id']) {
+            $outputPriority .= '<li style="' . $backgroundColor . '">
                   <a href="#" onclick="task_change_priority(' . $priority['id'] . ',' . $aRow['id'] . '); return false;">
                      ' . $priority['name'] . '
                   </a>
                </li>';
-            }
         }
-        $outputPriority .= '</ul>';
-        $outputPriority .= '</div>';
     }
 
-    $outputPriority .= '</span>';
+    $outputPriority .= '</ul>';
+    $outputPriority .= '</div>';
+}
+
+$outputPriority .= '</span>';
+
     $row[] = $outputPriority;
 
     // Custom fields add values

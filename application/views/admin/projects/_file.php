@@ -8,11 +8,70 @@
          </div>
          <div class="modal-body">
             <div class="row">
+			
+			
                <div class="col-md-6 border-right project_file_area">
                   <?php
                      if ($file->staffid == get_staff_user_id() || has_permission('projects', '', 'create')) {
                          ?>
                   <?php echo render_input('file_subject', 'project_discussion_subject', $file->subject, 'text', ['onblur' => 'update_file_data(' . $file->id . ')']); ?>
+				  
+	
+
+<div class="form-group col-md-6" app-field-wrapper="file_priority"><label for="file_importance" class="control-label">Priority</label>
+<?php if (isset($_COOKIE["file_priority_".$file->id])) {
+$pvalue = $_COOKIE["file_priority_".$file->id];
+}else{
+$pvalue='';
+}
+?>
+<select name="file_priority_<?php echo $file->id;?>" id="file_priority_<?php echo $file->id;?>" class="form-control" onchange="setPriority(this)">
+<option value="">NONE</option>
+<option value="Low"<?php if($pvalue=="Low"){echo ' selected';}?>>Low</option>
+<option value="Medium"<?php if($pvalue=="Medium"){echo ' selected';}?>>Medium</option>
+<option value="High"<?php if($pvalue=="High"){echo ' selected';}?>>High</option>
+</select></div>
+
+<div class="form-group col-md-6" app-field-wrapper="file_category"><label for="file_category" class="control-label">Category</label>
+<?php if (isset($_COOKIE["file_category_".$file->id])) {
+$cvalue = $_COOKIE["file_category_".$file->id];
+}else{
+$cvalue='';
+}
+?>
+<?php
+//$custom_categories = isset($_COOKIE["custom_categories"]) ? $_COOKIE["custom_categories"] : '';
+$custom_categories = @file_get_contents(__DIR__ .'/cats.txt');
+//$custom_categories =   "<script>document.write(localStorage.getItem('custom_categories'));</script>";
+$cats= explode(',',$custom_categories);
+?>
+
+<select name="file_category_<?php echo $file->id;?>" id="file_category_<?php echo $file->id;?>" class="form-control" onchange="setCategory(this)">
+<option value="">NONE</option>
+<?php
+foreach($cats as $cat){?>
+<option value="<?php echo trim($cat);?>"<?php if($cvalue==trim($cat)){echo ' selected';}?>><?php echo trim($cat);?></option>
+<?php }?>
+
+</select></div>
+
+
+ 						               
+<div class="clearfix"></div>                  
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+	
+				 				  
                   <?php echo render_textarea('file_description', 'project_discussion_description', $file->description, ['onblur' => 'update_file_data(' . $file->id . ')']); ?>
                   <hr />
                   <?php
@@ -92,6 +151,39 @@
 <!-- /.modal -->
 <?php $discussion_lang = get_project_discussions_language_array(); ?>
 <script>
+function setPriority(obj){
+var id = obj.id;
+var value = obj.value;
+document.cookie = id + "=" + value; 
+
+console.log(getCookie(id));
+
+}
+
+function setCategory(obj){
+var id = obj.id;
+var value = obj.value;
+document.cookie = id + "=" + value; 
+alert(id + "=" + value);
+console.log(getCookie(id));
+
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
  var discussion_id = '<?php echo $file->id; ?>';
  var discussion_user_profile_image_url = '<?php echo $discussion_user_profile_image_url; ?>';
  var current_user_is_admin = '<?php echo is_admin(); ?>';

@@ -1,0 +1,25 @@
+Array
+(
+    [topic] => Test topic edit
+    [agenda] => test agenda edit
+    [category] => New Project
+    [project] => 
+    [date] => 2023-08-03 21:00
+    [hour] => 0
+    [minutes] => 30
+    [timezone] => Europe/Amsterdam
+    [description] => test agenda edit
+    [reminder] => 2
+    [notes] => 
+    [password] => 
+    [contacts] => Array
+        (
+            [0] => 1
+        )
+
+    [staff] => Array
+        (
+            [0] => 1
+        )
+
+)

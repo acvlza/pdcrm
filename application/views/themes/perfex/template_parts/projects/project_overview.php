@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="row mtop15">
+<div class="row mtop15"style="color: #9ba1c4!important;">
     <div class="col-md-6">
         <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4">
             <?php echo _l('project_overview'); ?>
         </h4>
-        <div class="tw-flex tw-space-x-4">
+        <div class="tw-flex tw-space-x-4" >
             <p class="bold"><?php echo _l('project'); ?></p>
             <p><?php echo _l('the_number_sign'); ?><?php echo $project->id; ?></p>
         </div>
@@ -74,10 +74,10 @@ if (count($custom_fields) > 0) { ?>
   
 <?php if ($project->settings->view_tasks == 1) { ?>
     <div class="project-progress-bars tw-mb-3">
-        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3">
+        <div class="tw-rounded-md tw-border tw-border-solid  tw-py-2 tw-px-3" style="background-color: rgba(93, 91, 133, 0.56); border-color: #323761;">
             <div class="row">
-                <div class="col-md-9">
-                    <p class="bold text-dark font-medium tw-mb-0">
+                <div class="col-md-9" >
+                    <p class="bold  font-medium tw-mb-0">
                         <span dir="ltr"><?php echo $tasks_not_completed; ?> / <?php echo $total_tasks; ?></span>
                         <?php echo _l('project_open_tasks'); ?>
                     </p>
@@ -102,7 +102,7 @@ if (count($custom_fields) > 0) { ?>
 <?php } ?>
 <?php if ($project->deadline) { ?>
     <div class="project-progress-bars">
-        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3">
+        <div class="tw-rounded-md tw-border tw-border-solid tw-py-2 tw-px-3" style="background-color: rgba(93, 91, 133, 0.56); border-color: #323761;">
             <div class="row">
                 <div class="col-md-9">
                     <p class="bold text-dark font-medium tw-mb-0">
@@ -138,7 +138,8 @@ if (count($custom_fields) > 0) { ?>
         <div class="col-md-12 project-overview-column">
             <div class="row">
                 <div class="col-md-12">
-                    <hr />
+                   <hr style="background-color: #323761; border-color: #323761;">
+
                     <?php
                     if ($project->billing_type == 3 || $project->billing_type == 2) { ?>
                         <div class="row">
@@ -191,7 +192,8 @@ if (count($custom_fields) > 0) { ?>
                                 </p>
                             </div>
                         </div>
-                        <hr />
+                        <hr style="background-color: #323761; border-color: #323761;">
+
                     <?php } ?>
                 </div>
             </div>
@@ -199,8 +201,8 @@ if (count($custom_fields) > 0) { ?>
 
                 <div class="clearfix"></div>
                 <div class="col-md-12">
-                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4"><?php echo _l('project_description'); ?></h4>
-                    <div class="tc-content project-description tw-text-neutral-600">
+                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4" ><?php echo _l('project_description'); ?></h4>
+                    <div class="tc-content project-description">
                         <?php if (empty($project->description)) { ?>
                             <p class="text-center tw-mb-0">
                                 <?php echo _l('no_description_project'); ?>
@@ -211,13 +213,50 @@ if (count($custom_fields) > 0) { ?>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <hr>
-                <div class="col-md-12">
-                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4"><?php echo _l('Milestone Progress'); ?></h4>
-                    <div class="clearfix"></div>
-                    <hr>
-                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4"><?php echo _l('Gantt'); ?></h4>
+                <hr style="background-color: #323761; border-color: #323761;">
 
+                <div class="col-md-12">
+                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4"><?php echo _l('project_milestone_current'); ?></h4>
+                   
+<table class="table dt-table table-milestones" data-order-col="0" data-order-type="asc">
+    <thead>
+        <tr>
+        <?php foreach($milestones as $key=>$milestone){ 
+        if($key == 0){$start_date = _d($milestone['start_date']);}
+        ?>
+             <th><?php echo $milestone['name']; ?></th>
+             <?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+
+<tr>
+<td colspan="<?php echo count($milestones);?>">
+
+<?php if ($project->settings->view_tasks == 1) {
+
+ ?>
+<div class="progress tw-h-6 align-middle" style="margin-bottom:0px;"><span class="progress-bar-success" style="float:left;color:white;height:24px;padding-left:5px;"><?php echo $start_date;?></span><span class="" style="float:right;color:green;height:24px;padding-right:5px;"><?php echo $start_date;?></span>
+<div class="progress-bar progress-bar-success not-dynamic" role="progressbar" aria-valuenow="<?php echo $tasks_not_completed_progress; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $tasks_not_completed_progress; ?>%; position: relative;" data-percent="<?php echo $tasks_not_completed_progress; ?>">hello
+</div>
+</div>
+<?php } ?>
+
+</td>
+</tr>
+
+</tbody>
+</table>
+                   
+                    
+                    
+                    <div class="clearfix"></div>
+                    <hr style="background-color: #323761; border-color: #323761;">
+
+                    <h4 class="tw-font-semibold tw-text-base tw-mt-0 tw-mb-4"><?php echo _l('project_gant'); ?></h4>
+<?php if ($project->settings->view_gantt == 1 && $project->settings->available_features['project_gantt'] == 1) {               
+include __DIR__ .'/project_gantt.php';}
+?>
                 </div>
 
 

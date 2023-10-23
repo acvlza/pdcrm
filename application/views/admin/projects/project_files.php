@@ -1,4 +1,200 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<style>
+* { box-sizing: border-box; }
+
+/* force scrollbar */
+html { }
+
+body { font-family: sans-serif; }
+
+/* ---- grid ---- */
+
+.grid {
+  max-width: 1300px;
+  background: rgba(93, 91, 133, 0.56);
+  overflow-x: hidden; 
+  overflow-y: scroll;
+  height: 400px;
+  max-height: 400px;
+  padding:5px;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 14%;
+}
+
+.grid .grid-item {
+  padding-bottom: 14%; /* hack for proportional sizing */
+  float: left;
+  background-position: center center;
+  background-size: cover;
+  
+}
+
+
+/* ---- grid2 ---- */
+
+.grid2 {
+
+ min-width:100% !important;
+ max-width:100% !important;
+  background: rgba(93, 91, 133, 0.56);
+overflow-x: scroll; 
+  /*overflow-y: hidden;*/ 
+  height: 200px;
+  padding:5px;
+}
+
+
+
+/* clear fix */
+
+
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 14%;
+}
+
+.grid2 .grid-item {
+  padding-bottom: 14%; /* hack for proportional sizing */
+ 
+  background-position: center center;
+  background-size: cover;
+
+}
+
+.packery-drop-placeholder {
+  border: 3px dotted #333;
+  background: hsla(0, 0%, 0%, 0.3);
+}
+
+.grid-item.is-dragging,
+.grid-item.is-positioning-post-drag {
+  z-index: 2;
+}
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 7px;
+  left: 5px;
+  border-radius:15%;width:30px;height:30px;padding:5px;text-align:center;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 4px;
+  left: 15px;
+  color:#CD2323;
+}
+
+/* Top right text */
+.top-right {
+    position: absolute;
+    top: 1px;
+    background: rgb(0, 0, 0);
+    background-color: rgba(93, 91, 133, 0.40);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 5px 7px;
+    text-align: right;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  
+  
+}
+
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.red-label{
+
+
+}
+
+.no-display{
+  visibility:hidden;
+  width:0px;
+  height:100px;
+  
+}
+
+#project-files-upload{
+margin-top:30px !important; 
+  
+}
+
+.fa-trash{
+	color:white;
+}
+</style>
+
+
+<?php $custom_categories = isset($_COOKIE["custom_categories"]) ? $_COOKIE["custom_categories"] : '';?>
+<h5 style="font-weight:600; color: #4F5786!important; padding-bottom: 5px; margin-left:20px;"> Category Filter</h5> 
+<?php $viewcat = isset($_COOKIE["file_category"]) ? $_COOKIE["file_category"] : '';?>
+<div class="form-group col-md-4" app-field-wrapper="file_category">
+<select name="file_category" id="file_category" class="form-control" onchange="selectCategory(this)">
+<option value="">None</option>
+<?php
+$cats= explode(',',$custom_categories);
+foreach($cats as $cat){?>
+<option value="<?php echo trim($cat);?>"<?php if($viewcat==trim($cat)){echo ' selected';}?>><?php echo trim($cat);?></option>
+<?php }?>
+</select></div>
+
+<div class="form-group col-md-6" app-field-wrapper="custom_categories">
+    <input 
+        type="text" 
+        name="custom_categories" 
+        id="custom_categories" 
+        class="form-control" 
+        value="<?php echo $custom_categories; ?>" 
+        placeholder="Enter custom categories here and separate it by comma. Ex: Intro, Outro">
+</div>
+
+
+  <div class="form-group col-md-2">
+ 
+    <button class="btn btn-default btn-block" onclick="saveCategories()">
+     Save
+    </button>
+  </div>
+
+<div class="clearfix"></div>
+<hr style="height: 2px; background-color: #323761; border: none; opacity: 0.5;">
+
+
+<h3 style="font-weight:600; color: #323761!important; padding-bottom: 20px;"> Main Bin</h3> 
+
+
 <?php echo form_open_multipart(admin_url('projects/upload_file/' . $project->id), ['class' => 'dropzone', 'id' => 'project-files-upload']); ?>
 <input type="file" name="file" multiple />
 <?php echo form_close(); ?>
@@ -30,7 +226,7 @@
                     <input type="checkbox" name="mass_delete" id="mass_delete">
                     <label for="mass_delete"><?php echo _l('mass_delete'); ?></label>
                 </div>
-                <hr class="mass_delete_separator" />
+                <hr style="Border : 1px solid #323761;" />
                 <?php } ?>
                 <div id="bulk_change">
                     <div class="form-group">
@@ -45,7 +241,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _l('close'); ?></button>
-                <a href="#" class="btn btn-primary"
+                <a href="#" class="btn btn-default"
                     onclick="project_files_bulk_action(this); return false;"><?php echo _l('confirm'); ?></a>
             </div>
         </div><!-- /.modal-content -->
@@ -59,115 +255,257 @@
     onclick="window.location.href = '<?php echo admin_url('projects/download_all_files/' . $project->id); ?>'; return false;"
     class="table-btn hide" data-table=".table-project-files"><?php echo _l('download_all'); ?></a>
 <div class="clearfix"></div>
+
+
 <div class="panel_s panel-table-full">
     <div class="panel-body">
-        <table class="table dt-table table-project-files" data-order-col="7" data-order-type="desc">
-            <thead>
-                <tr>
-                    <th data-orderable="false"><span class="hide"> - </span>
-                        <div class="checkbox mass_select_all_wrap"><input type="checkbox" id="mass_select_all"
-                                data-to-table="project-files"><label></label></div>
-                    </th>
-                    <th><?php echo _l('project_file_filename'); ?></th>
-                    <th><?php echo _l('project_file__filetype'); ?></th>
-                    <th><?php echo _l('project_discussion_last_activity'); ?></th>
-                    <th><?php echo _l('project_discussion_total_comments'); ?></th>
-                    <th><?php echo _l('project_file_visible_to_customer'); ?></th>
-                    <th><?php echo _l('project_file_uploaded_by'); ?></th>
-                    <th><?php echo _l('project_file_dateadded'); ?></th>
-                    <th><?php echo _l('options'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($files as $file) {
-    $path = get_upload_path_by_type('project') . $project->id . '/' . $file['file_name']; ?>
-                <tr>
-                    <td>
-                        <div class="checkbox"><input type="checkbox" value="<?php echo $file['id']; ?>"><label></label>
-                        </div>
-                    </td>
-                    <td data-order="<?php echo $file['file_name']; ?>">
-                        <a href="#"
-                            onclick="view_project_file(<?php echo $file['id']; ?>,<?php echo $file['project_id']; ?>); return false;">
-                            <?php if (is_image(PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name']) || (!empty($file['external']) && !empty($file['thumbnail_link']))) {
-        echo '<div class="text-left"><i class="fa fa-spinner fa-spin mtop30"></i></div>';
-        echo '<img class="project-file-image img-table-loading" src="#" data-orig="' . project_file_url($file, true) . '" width="100">';
-        echo '</div>';
-    }
-    echo $file['subject']; ?></a>
-                    </td>
-                    <td data-order="<?php echo $file['filetype']; ?>"><?php echo $file['filetype']; ?></td>
-                    <td data-order="<?php echo $file['last_activity']; ?>">
-                        <?php
-            if (!is_null($file['last_activity'])) { ?>
-                        <span class="text-has-action" data-toggle="tooltip"
-                            data-title="<?php echo _dt($file['last_activity']); ?>">
-                            <?php echo time_ago($file['last_activity']); ?>
-                        </span>
-                        <?php } else {
-                echo _l('project_discussion_no_activity');
-            } ?>
-                    </td>
-                    <?php $total_file_comments = total_rows(db_prefix() . 'projectdiscussioncomments', ['discussion_id' => $file['id'], 'discussion_type' => 'file']); ?>
-                    <td data-order="<?php echo $total_file_comments; ?>">
-                        <?php echo $total_file_comments; ?>
-                    </td>
-                    <td data-order="<?php echo $file['visible_to_customer']; ?>">
-                        <?php
-            $checked = '';
-    if ($file['visible_to_customer'] == 1) {
-        $checked = 'checked';
-    } ?>
-                        <div class="onoffswitch">
-                            <input type="checkbox"
-                                data-switch-url="<?php echo admin_url(); ?>projects/change_file_visibility"
-                                id="<?php echo $file['id']; ?>" data-id="<?php echo $file['id']; ?>"
-                                class="onoffswitch-checkbox" value="<?php echo $file['id']; ?>" <?php echo $checked; ?>>
-                            <label class="onoffswitch-label" for="<?php echo $file['id']; ?>"></label>
-                        </div>
+	
+	
+	
+<div style="width:100%;margin:auto;">
+<div class="grid which" id="grid">
+<div class="grid-sizer"></div>
 
-                    </td>
-                    <td>
-                        <?php if ($file['staffid'] != 0) {
-        $_data = '<a href="' . admin_url('staff/profile/' . $file['staffid']) . '">' . staff_profile_image($file['staffid'], [
-                'staff-profile-image-small',
-              ]) . '</a>';
-        $_data .= ' <a href="' . admin_url('staff/member/' . $file['staffid']) . '">' . get_staff_full_name($file['staffid']) . '</a>';
-        echo $_data;
-    } else {
-        echo ' <img src="' . contact_profile_image_url($file['contact_id'], 'thumb') . '" class="client-profile-image-small mrigh5">
-             <a href="' . admin_url('clients/client/' . get_user_id_by_contact_id($file['contact_id']) . '?contactid=' . $file['contact_id']) . '">' . get_contact_full_name($file['contact_id']) . '</a>';
-    } ?>
-                    </td>
-                    <td data-order="<?php echo $file['dateadded']; ?>"><?php echo _dt($file['dateadded']); ?></td>
-                    <td>
-                        <div class="tw-flex tw-items-center tw-space-x-3">
-                            <?php if (empty($file['external'])) {
-        $file_name = $file['original_file_name'] != '' ? $file['original_file_name'] : $file['file_name']; ?>
+<?php 
+$c =1;$b=1;
+$key=0;
+foreach ($files as $key=>$file) {
+$pos = ($file['id'] & 1) ? 'even' : 'odd';  
+$bin_item = isset($_COOKIE["bin_item_".$file['id']]) ? $_COOKIE["bin_item_".$file['id']] :'false';    
+$key=$key+1;
+if (isset($_COOKIE["file_priority_".$file['id']])) {
+$pvalue = $_COOKIE["file_priority_".$file['id']];
+if($pvalue == 'Low'){
+$color='grey';
+}else if($pvalue == 'Medium'){
+$color='orange';
+}else if($pvalue == 'High'){
+$color='red';
+}else{
+$color='';
+$pvalue ='';
+}
+$priority = '<span style="background-color:'.$color.';color:white;padding:3px 5px;border-radius:5px;font-size:10px;font-weight:bold;">'.strtoupper($pvalue).'</span>';
+}else{
+$priority ='';
+}
+
+
+if (isset($_COOKIE["file_category_".$file['id']])) {
+$cvalue = $_COOKIE["file_category_".$file['id']];
+$viewcat = isset($_COOKIE["file_category"]) ? $_COOKIE["file_category"] : '';
+}else{
+$cvalue='';
+$viewcat ='';
+}
+
+if($cvalue != $viewcat && $viewcat !=''){continue;}
+
+$path = get_upload_path_by_type('project') . $project->id . '/' . $file['file_name']; ?>
+<?php if (!is_image(PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name'])) {
+if ( $bin_item != 'true' ){
+$httpstr = explode("://", APP_BASE_URL)[0];
+$placeholder = $httpstr."://".$_SERVER['SERVER_NAME']."/assets/images/placeholder.jpg";?>  <div class="gutter-sizer"></div>
+
+<div id="grid-item-<?php echo $file['id']?>" class="grid-item" data-item-id="<?php echo $c;?>" style="background-image: url(<?php echo $placeholder;?>);border-radius: 10px;"><div class="top-right"><a href="#" onclick="view_project_file(<?php echo $file['id']; ?>,<?php echo $file['project_id']; ?>); return false;"><i style="margin-right:5px;color:white;" class="fa fa-eye" aria-hidden="true"></i></a>
+<?php $file_name = $file['original_file_name'] != '' ? $file['original_file_name'] : $file['file_name']; ?>
                             <a href="#" data-toggle="modal" data-original-file-name="<?php echo $file_name; ?>"
                                 data-filetype="<?php echo $file['filetype']; ?>"
                                 data-file-name="<?php echo $file['original_file_name']; ?>"
                                 data-path="<?php echo PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name']; ?>"
                                 data-target="#send_file"
-                                class="tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 tw-mt-1">
-                                <i class="fa-regular fa-envelope fa-lg"></i>
-                            </a>
-                            <?php
-    } ?>
-                            <?php if ($file['staffid'] == get_staff_user_id() || has_permission('projects', '', 'delete')) { ?>
-                            <a href="<?php echo admin_url('projects/remove_file/' . $project->id . '/' . $file['id']); ?>"
-                                class="tw-mt-px tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 _delete">
-                                <i class="fa-regular fa-trash-can fa-lg"></i>
-                            </a>
-                            <?php } ?>
-                        </div>
-                    </td>
-                </tr>
-                <?php
-} ?>
-            </tbody>
-        </table>
-    </div>
+                                class="tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 tw-mt-1"><i style="margin-right:5px;color:white;" class="fa-regular fa-envelope fa-lg" aria-hidden="true"></i></a>
+
+<?php if ($file['staffid'] == get_staff_user_id() || has_permission('projects', '', 'delete') || is_admin()) { ?>
+<a href="<?php echo admin_url('projects/remove_file/' . $project->id . '/' . $file['id']); ?>"><i class="fa-solid fa-trash"></i></a>
+<?php } ?>
 </div>
+
+<div class="top-left"><?php echo $priority;?></div>
+
+<div class="centered"><?php //echo $file['subject']; ?></div>
+<div id="grid-number-<?php echo $file['id']?>" class="bottom-right" style="font-size:12px;font-weight:normal;color:white;background-color: rgba(93, 91, 133, 0.60);;;border-radius:30%;width:30px;height:30px;padding:5px;text-align:center;"><?php echo $key; ?></div>
+<span onclick="toBin(<?php echo $file['id']?>);" class="bottom-left">
+<!--<span class="glyphicon glyphicon-arrow-down"></span>-->
+<img style="width:30px;" src="<?php echo site_url('assets/images/down.png'); ?>">
+</span>
+</div><?php
+}
+}else{
+if ( $bin_item != 'true' ) {
+?>
+<div id="grid-item-<?php echo $file['id']?>" class="grid-item" data-item-id="<?php echo $c;?>" style="background-image: url(<?php echo project_file_url($file, false);?>);border-radius: 10px;"><div class="top-right"><a href="#" onclick="view_project_file(<?php echo $file['id']; ?>,<?php echo $file['project_id']; ?>); return false;"><i style="margin-right:5px;color:white;" class="fa fa-eye" aria-hidden="true"></i></a>
+
+<?php $file_name = $file['original_file_name'] != '' ? $file['original_file_name'] : $file['file_name']; ?>
+                            <a href="#" data-toggle="modal" data-original-file-name="<?php echo $file_name; ?>"
+                                data-filetype="<?php echo $file['filetype']; ?>"
+                                data-file-name="<?php echo $file['original_file_name']; ?>"
+                                data-path="<?php echo PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name']; ?>"
+                                data-target="#send_file"
+                                class="tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 tw-mt-1"><i style="margin-right:5px;color:white;" class="fa-regular fa-envelope fa-lg" aria-hidden="true"></i></a>
+								
+<?php if ($file['staffid'] == get_staff_user_id() || has_permission('projects', '', 'delete') || is_admin()) { ?>
+<a href="<?php echo admin_url('projects/remove_file/' . $project->id . '/' . $file['id']); ?>"><i class="fa-solid fa-trash"></i></a>
+<?php } ?>
+</div>
+
+<div class="top-left"><?php echo $priority;?></div>
+
+<div class="centered"><?php //echo $file['subject']; ?></div>
+<div id="grid-number-<?php echo $file['id']?>" class="bottom-right" style="font-size:16px;font-weight:bold;color:white;background: rgba(255, 255, 255, 0.56);;border-radius:15%;width:30px;height:30px;padding:5px;text-align:center;"><?php echo $key; ?></div>
+<span onclick="toBin(<?php echo $file['id']?>);" class="bottom-left">
+<!--<span class="glyphicon glyphicon-arrow-down"></span>-->
+<img style="width:30px;" src="<?php echo site_url('assets/images/down.png'); ?>">
+</span>
+</div>
+<?php
+
+
+}
+}
+$c++;
+
+}
+
+?>
+
+</div>
+</div>
+<div class="clearfix"></div>
+<hr style="height: 2px; background-color: #323761; border: none; opacity: 0.5;">
+
+<h3 style="font-weight:600; color: #4F5786!important; padding-bottom: 20px;"> Ordered Bin</h3> 
+
+ <div class="clearfix"></div>
+<hr style="height: 2px; background-color: #323761; border: none; opacity: 0.5;">
+
+<div style="width:100%;margin:auto;">
+<div class="grid2" id="grid2">
+<div class="grid-sizer"></div>
+
+
+<?php 
+$c =1;$b=1;
+$keys=0;
+foreach ($files as $key=>$file) {
+$pos = ($file['id'] & 1) ? 'even' : 'odd';  
+$bin_item = isset($_COOKIE["bin_item_".$file['id']]) ? $_COOKIE["bin_item_".$file['id']] :'false';  
+
+if (isset($_COOKIE["file_priority_".$file['id']])) {
+$pvalue = $_COOKIE["file_priority_".$file['id']];
+if($pvalue == 'Low'){
+$color='grey';
+}else if($pvalue == 'Medium'){
+$color='orange';
+}else if($pvalue == 'High'){
+$color='red';
+}else{
+$color='';
+$pvalue ='';
+}
+$priority = '<span style="background-color:'.$color.';color:white;padding:3px 5px;border-radius:5px;font-size:10px;font-weight:bold;">'.strtoupper($pvalue).'</span>';
+}else{
+$priority ='';
+}
+
+
+if (isset($_COOKIE["file_category_".$file['id']])) {
+$cvalue = $_COOKIE["file_category_".$file['id']];
+$viewcat = isset($_COOKIE["file_category"]) ? $_COOKIE["file_category"] : '';
+}else{
+$cvalue='';
+$viewcat ='';
+}
+
+if($cvalue != $viewcat && $viewcat !=''){continue;}
+
+$path = get_upload_path_by_type('project') . $project->id . '/' . $file['file_name']; ?>
+<?php if (!is_image(PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name'])) {
+if ( $bin_item == 'true' ){
+$keys++;  
+$httpstr = explode("://", APP_BASE_URL)[0];
+$placeholder = $httpstr."://".$_SERVER['SERVER_NAME']."/assets/images/placeholder.jpg";?>
+<div id="grid-item-<?php echo $file['id']?>" class="grid-item" data-item-id="<?php echo $c;?>" style="background-image: url(<?php echo $placeholder;?>);border-radius: 10px;"><div class="top-right"><a href="#" onclick="view_project_file(<?php echo $file['id']; ?>,<?php echo $file['project_id']; ?>); return false;"><i style="margin-right:5px;color:white;" class="fa fa-eye" aria-hidden="true"></i></a>
+
+<?php $file_name = $file['original_file_name'] != '' ? $file['original_file_name'] : $file['file_name']; ?>
+                            <a href="#" data-toggle="modal" data-original-file-name="<?php echo $file_name; ?>"
+                                data-filetype="<?php echo $file['filetype']; ?>"
+                                data-file-name="<?php echo $file['original_file_name']; ?>"
+                                data-path="<?php echo PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name']; ?>"
+                                data-target="#send_file"
+                                class="tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 tw-mt-1"><i style="margin-right:5px;color:white;" class="fa-regular fa-envelope fa-lg" aria-hidden="true"></i></a>
+								
+<?php if ($file['staffid'] == get_staff_user_id() || has_permission('projects', '', 'delete') || is_admin()) { ?>
+<a href="<?php echo admin_url('projects/remove_file/' . $project->id . '/' . $file['id']); ?>"><i class="fa-solid fa-trash"></i></a>
+<?php } ?>
+</div>
+
+<div class="top-left"><?php echo $priority;?></div>
+
+<div class="centered"><?php echo $file['type']; ?></div>
+<div id="grid-number-<?php echo $file['id']?>" class="bottom-right" style="font-size:16px;font-weight:bold;color:white;background: rgba(255, 255, 255, 0.56);;border-radius:15%;width:30px;height:30px;padding:5px;text-align:center;"><?php echo $key; ?></div>
+<span onclick="fromBin(<?php echo $file['id']?>);" class="bottom-left">
+<!--<span class="glyphicon glyphicon-arrow-down"></span>-->
+<img style="width:30px;" src="<?php echo site_url('assets/images/up.png'); ?>">
+</span>
+</div><?php
+}
+}else{
+if ( $bin_item == 'true' ){
+  $keys++;
+?>
+<div id="grid-item-<?php echo $file['id']?>" class="grid-item" data-item-id="<?php echo $c;?>" style="background-image: url(<?php echo project_file_url($file, false);?>);border-radius: 10px;"><div class="top-right"><a href="#" onclick="view_project_file(<?php echo $file['id']; ?>,<?php echo $file['project_id']; ?>); return false;"><i style="margin-right:5px;color:white;" class="fa fa-eye" aria-hidden="true"></i></a>
+
+<?php $file_name = $file['original_file_name'] != '' ? $file['original_file_name'] : $file['file_name']; ?>
+                            <a href="#" data-toggle="modal" data-original-file-name="<?php echo $file_name; ?>"
+                                data-filetype="<?php echo $file['filetype']; ?>"
+                                data-file-name="<?php echo $file['original_file_name']; ?>"
+                                data-path="<?php echo PROJECT_ATTACHMENTS_FOLDER . $project->id . '/' . $file['file_name']; ?>"
+                                data-target="#send_file"
+                                class="tw-text-neutral-500 hover:tw-text-neutral-700 focus:tw-text-neutral-700 tw-mt-1"><i style="margin-right:5px;color:white;" class="fa-regular fa-envelope fa-lg" aria-hidden="true"></i></a>
+								
+<?php if ($file['staffid'] == get_staff_user_id() || has_permission('projects', '', 'delete') || is_admin()) { ?>
+<a href="<?php echo admin_url('projects/remove_file/' . $project->id . '/' . $file['id']); ?>"><i class="fa-solid fa-trash"></i></a>
+<?php } ?>
+</div>
+
+<div class="top-left"><?php echo $priority;?></div>
+
+<div class="centered"><?php echo $file['type']; ?></div>
+<div id="grid-number-<?php echo $file['id']?>" class="bottom-right bottom-right-bin" style="font-size:16px;font-weight:bold;color:white;background: rgba(255, 255, 255, 0.56);;border-radius:15%;width:30px;height:30px;padding:5px;text-align:center;"><?php echo $keys; ?></div>
+<span onclick="fromBin(<?php echo $file['id']?>);" class="bottom-left">
+<!--<span class="glyphicon glyphicon-arrow-down"></span>-->
+<img style="width:30px;" src="<?php echo site_url('assets/images/up.png'); ?>">
+</span>
+</div>
+<?php
+
+}
+}
+$c++;
+
+
+
+
+}
+
+?>
+
+</div>
+</div>
+
+<div class="clearfix"></div>
+<hr style="border: 1px solid #323761 !important;">
+<div class="pull-right mbot20">
+    <button class="btn btn-default" onclick="Reset();">
+      Reset File Order
+    </button>
+  </div>
+  
+  
+ </div>
+ </div>
+
 <div id="project_file_data"></div>
 <?php include_once(APPPATH . 'views/admin/clients/modals/send_file_modal.php'); ?>
+

@@ -11811,7 +11811,7 @@ elFinder.prototype._options = {
 			// These name are 'size', 'aliasfor', 'path', 'link', 'dim', 'modify', 'perms', 'locked', 'owner', 'group', 'perm' and your custom info items label
 			hideItems : [],
 			// Maximum file size (byte) to get file contents hash (md5, sha256 ...)
-			showHashMaxsize : 104857600, // 100 MB
+			showHashMaxsize : 2147483648, // 100 MB
 			// Array of hash algorisms to show on info dialog
 			// These name are 'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'sha3-224', 'sha3-256', 'sha3-384', 'sha3-512', 'shake128' and 'shake256'
 			showHashAlgorisms : ['md5', 'sha256'],

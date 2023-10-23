@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+
 <table class="table dt-table table-contracts" data-order-col="4" data-order-type="asc">
   <thead>
     <tr>
@@ -7,6 +8,7 @@
       <th class="th-contracts-signature"><?php echo _l('signature'); ?></th>
       <th class="th-contracts-start-date"><?php echo _l('clients_contracts_dt_start_date'); ?></th>
       <th class="th-contracts-end-date"><?php echo _l('clients_contracts_dt_end_date'); ?></th>
+<!--	  <th class="th-contracts-status"><?php echo _l('Status'); ?></th>-->
       <?php
       $custom_fields = get_custom_fields('contracts',array('show_on_client_portal'=>1));
       foreach($custom_fields as $field){ ?>
@@ -17,6 +19,38 @@
   <tbody>
     <?php foreach($contracts as $contract){
       $expiry_class = '';
+/*status
+0 = Pending
+1 = Approved
+2 = Revise
+*/
+
+if($contract['status']==0){
+$status='Pending';
+$btype = 'info';
+$row_color = '#e9f2ef';
+}elseif($contract['status']==1){
+$status = 'Approved';
+$btype = 'success';
+$row_color = '#eaf6ff';
+}elseif($contract['status']==2){
+$status= 'Revised';
+$btype = 'danger';
+$row_color = '#feacc4';
+}  
+
+$display_status = '<div class="dropdown">
+  <button style="padding:2px 10px;border:0;" class="btn btn-'.$btype.' dropdown-toggle" type="button" data-toggle="dropdown">'.$status.'
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="javascript:void(0);" onclick="approve_contract('.$contract['id'].');"><i class="fa fa-check green-color" aria-hidden="true"></i> Approve</a></li>
+    <li><a href="javascript:void(0);" onclick="revise_contract('.$contract['id'].');"><i class="fa fa-refresh red-color" aria-hidden="true"></i> Revise</a></li>
+    </ul>
+</div>';
+
+	  
+	  
+	  
       if (!empty($contract['dateend'])) {
         $_date_end = date('Y-m-d', strtotime($contract['dateend']));
         if ($_date_end < date('Y-m-d')) {
@@ -42,6 +76,7 @@
        </td>
        <td data-order="<?php echo $contract['datestart']; ?>"><?php echo _d($contract['datestart']); ?></td>
        <td data-order="<?php echo $contract['dateend']; ?>"><?php echo _d($contract['dateend']); ?></td>
+	<!--   <td data-order="<?php echo $contract['status']; ?>"><?php echo $display_status?></td>--->
        <?php foreach($custom_fields as $field){ ?>
          <td><?php echo get_custom_field_value($contract['id'],$field['id'],'contracts'); ?></td>
        <?php } ?>

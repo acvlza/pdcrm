@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<footer class="footer">
-    <div class="container">
-        <div class="row">
+<!--<footer class="footer">
+   <div class="container">
+      <div class="row">
             <div class="col-md-12 text-center">
                 <span class="copyright-footer"><?php echo date('Y'); ?>
                     <?php echo _l('clients_copyright', get_option('companyname')); ?>
@@ -19,4 +19,13 @@
             </div>
         </div>
     </div>
-</footer>
+</footer>-->
+<div class="clearfix"></div>
+<hr />
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+$('.customers-nav-item-knowledge-base').hide();
+$('.customers-nav-item-contracts').hide();
+});
+</script>

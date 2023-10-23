@@ -190,6 +190,9 @@ class Projects extends AdminController
             if (!$project) {
                 blank_page(_l('project_not_found'));
             }
+			
+			$data['gantt_data'] = (new Gantt($id, 'milestones'))->excludeMilestonesFromCustomer()->get();
+            $data['milestones'] = $this->projects_model->get_milestones($id, ['hide_from_customer' => 0]);
 
             $project->settings->available_features = unserialize($project->settings->available_features);
             $data['statuses']                      = $this->projects_model->get_project_statuses();

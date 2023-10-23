@@ -12,7 +12,7 @@ File Location : /Applications/MAMP/htdocs/pdcrm/application/views/admin/projects
                 <div class="_buttons tw-mb-2 sm:tw-mb-4">
                     <?php if (has_permission('projects', '', 'create')) { ?>
                     <a href="<?php echo admin_url('projects/project'); ?>"
-                        class="btn btn-primary pull-left display-block mright5">
+                        class="btn btn-default pull-left display-block mright5">
                         <i class="fa-regular fa-plus tw-mr-1"></i>
                         <?php echo _l('new_project'); ?>
                     </a>
@@ -87,34 +87,58 @@ File Location : /Applications/MAMP/htdocs/pdcrm/application/views/admin/projects
                   ?>
                             </div>
                             <div class="_filters _hidden_inputs">
-                                <?php
-                  echo form_hidden('my_projects');
-                  foreach ($statuses as $status) {
-                      $value = $status['id'];
-                      if ($status['filter_default'] == false && !$this->input->get('status')) {
-                          $value = '';
-                      } elseif ($this->input->get('status')) {
-                          $value = ($this->input->get('status') == $status['id'] ? $status['id'] : '');
-                      }
-                      echo form_hidden('project_status_' . $status['id'], $value); ?>
-                                <div
-                                    class="col-md-2 col-xs-6 md:tw-border-r md:tw-border-solid md:tw-border-neutral-300 last:tw-border-r-0">
-                                    <?php $where = ($_where == '' ? '' : $_where . ' AND ') . 'status = ' . $status['id']; ?>
-                                    <a href="#"
-                                        class="tw-text-neutral-600 hover:tw-opacity-70 tw-inline-flex tw-items-center"
-                                        onclick="dt_custom_view('project_status_<?php echo $status['id']; ?>','.table-projects','project_status_<?php echo $status['id']; ?>',true); return false;">
-                                        <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">
-                                            <?php echo total_rows(db_prefix() . 'projects', $where); ?>
-                                        </span>
-                                        <span style="color:<?php echo $status['color']; ?>"
-                                            project-status-<?php echo $status['id']; ?>">
-                                            <?php echo $status['name']; ?>
-                                        </span>
-                                    </a>
-                                </div>
-                                <?php
-                  } ?>
-                            </div>
+                               <?php
+echo form_hidden('my_projects');
+foreach ($statuses as $status) {
+    $value = $status['id'];
+    if ($status['filter_default'] == false && !$this->input->get('status')) {
+        $value = '';
+    } elseif ($this->input->get('status')) {
+        $value = ($this->input->get('status') == $status['id'] ? $status['id'] : '');
+    }
+    echo form_hidden('project_status_' . $status['id'], $value);
+    
+    $customStyles = "";
+    $customFontColor = "";
+    switch($status['id']) {
+        case 1:
+            $customStyles = "background-color: rgb(16,70,95, .20); border-color: rgb(16,70,95, 0.2); border-style: solid; border-width: 1px;
+                border-radius: 0.8rem;
+                margin: 0 10px;
+                padding: 0.5rem 1rem;";
+            $customFontColor = "color: rgb(27,120,163);";
+            break;
+        case 2:
+            $customStyles = "background-color: rgba(101, 85, 16, 0.20); border-color: rgba(101, 85, 16, 0.20); border-style: solid; border-width: 1px;
+                border-radius: 0.8rem;
+                margin-right: 10px;
+                padding: 0.5rem 1rem;";
+            $customFontColor = "color: rgba(118, 99, 19, .84);";
+            break;
+        case 3:
+            $customStyles = "background-color: rgba(0, 113, 53, .20); border-color: rgba(0, 113, 53, .09); border-style: solid; border-width: 1px;
+                border-radius: 0.8rem;
+                margin-right: 10px;
+                padding: 0.5rem 1rem";
+            $customFontColor = "color: rgba(0, 113, 53);";
+            break;
+    }
+    $where = ($_where == '' ? '' : $_where . ' AND ') . 'status = ' . $status['id'];
+?>
+    <div class="col-md-2 col-xs-6 md:tw-border-r md:tw-border-solid md:tw-border-neutral-300 last:tw-border-r-0" style="<?php echo $customStyles; ?>">
+        <a href="#" class="tw-text-neutral-600 hover:tw-opacity-70 tw-inline-flex tw-items-center" 
+           onclick="dt_custom_view('project_status_<?php echo $status['id']; ?>','.table-projects','project_status_<?php echo $status['id']; ?>',true); return false;">
+            <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg" style="<?php echo $customFontColor; ?>">
+                <?php echo total_rows(db_prefix() . 'projects', $where); ?>
+            </span>
+            <span style="<?php echo $customFontColor; ?>">
+                <?php echo $status['name']; ?>
+            </span>
+        </a>
+    </div>
+<?php } ?>
+
+                        </div>
                         </div>
                         <hr class="hr-panel-separator" />
                         <div class="panel-table-full">

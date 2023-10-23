@@ -286,7 +286,7 @@ foreach ($clients as $client) {
     ));
 }
 
-add_option('media_max_file_size_upload', 50);
+add_option('media_max_file_size_upload', 2048 M);
 add_option('client_staff_add_edit_delete_task_comments_first_hour', 1);
 add_option('show_projects_on_calendar', 1);
 add_option('leads_kanban_limit', 500);

@@ -67,6 +67,7 @@ http://viima.github.io/jquery-comments/*/
 	width: 1em;
 	height: 1em;
 	background-size: cover;
+	color: #9ba1c4;
 }
 
 .jquery-comments i.fa.image:before {
@@ -215,9 +216,8 @@ http://viima.github.io/jquery-comments/*/
 	overflow-y: auto;
 	overflow-x: hidden;
 	cursor: text;
-
-	border: 1px solid #CCC;;
-	background: #FFF;
+	border: 1px solid #9ba1c4;
+	background: rgba(93, 91, 133, 0.56);
 	font-size: 1em;
 	line-height: 1.45em;
 	padding: .25em .8em;
@@ -265,9 +265,8 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments ul.navigation {
 	clear: both;
-
 	color: #CCC;
-	border-bottom: 2px solid #CCC;
+	border-bottom: 1px solid #323761;
 	line-height: 2em;
 	font-size: 1em;
 	margin-bottom: 0.5em;
@@ -293,7 +292,7 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments ul.navigation li.active,
 .jquery-comments ul.navigation li:hover {
-	color: #000;
+	color: #9ba1c4!important;
 }
 
 .jquery-comments ul.navigation li.active:after {
@@ -465,7 +464,7 @@ http://viima.github.io/jquery-comments/*/
 }
 
 .jquery-comments ul.main li.comment .comment-wrapper {
-	border-top: 1px solid #DDD;
+	border-top: 1px solid #323761;
 	overflow: hidden;
 }
 

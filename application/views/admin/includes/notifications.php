@@ -64,7 +64,7 @@
                 if ($notification['fromuserid'] != 0) {
                     $description = $notification['from_fullname'] . ' - ' . $description;
                 } else {
-                    $description = $notification['from_fullname'] . ' - ' . $description . '<br /><span class="label inline-block mtop5 label-info">' . _l('is_customer_indicator') . '</span>';
+                    $description = $notification['from_fullname'] . ' - ' . $description . '<br /><span class="label label-primary inline-block mtop5">' . _l('is_customer_indicator') . '</span>';
                 }
             }
             echo '<span class="notification-title">' . $description . '</span>'; ?><br />

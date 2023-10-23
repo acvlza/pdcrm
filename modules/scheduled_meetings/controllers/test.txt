@@ -1,0 +1,76 @@
+stdClass Object
+(
+    [uuid] => 7Nk7L+u3TiGVKrRXc8DWCg==
+    [id] => 74645357047
+    [host_id] => _RWWFOD8TgO-idZ8da50MA
+    [host_email] => gjphilander@gmail.com
+    [assistant_id] => 
+    [topic] => This is the topic2
+    [type] => 2
+    [status] => waiting
+    [start_time] => 2023-08-02T15:00:00Z
+    [duration] => 0
+    [timezone] => Africa/Harare
+    [agenda] => my agenda2
+    [created_at] => 2023-08-01T19:53:27Z
+    [start_url] => https://us04web.zoom.us/s/74645357047?zak=eyJ0eXAiOiJKV1QiLCJzdiI6IjAwMDAwMSIsInptX3NrbSI6InptX28ybSIsImFsZyI6IkhTMjU2In0.eyJhdWQiOiJjbGllbnRzbSIsInVpZCI6Il9SV1dGT0Q4VGdPLWlkWjhkYTUwTUEiLCJpc3MiOiJ3ZWIiLCJzayI6IjAiLCJzdHkiOjEsIndjZCI6InVzMDQiLCJjbHQiOjAsIm1udW0iOiI3NDY0NTM1NzA0NyIsImV4cCI6MTY5MDkyNjgwOCwiaWF0IjoxNjkwOTE5NjA4LCJhaWQiOiJkbzBhOWtPdFE5ZUpibFVSTGlQTG5RIiwiY2lkIjoiIn0.KppqJF_nXlCIBJvncV5zYf6xrhN_T_lA9RK9SR1PNUY
+    [join_url] => https://us04web.zoom.us/j/74645357047?pwd=K5ZC8tqqrUbcctLY8lfVDNbEJ7XMtZ.1
+    [password] => yCx186
+    [h323_password] => 850554
+    [pstn_password] => 850554
+    [encrypted_password] => K5ZC8tqqrUbcctLY8lfVDNbEJ7XMtZ.1
+    [settings] => stdClass Object
+        (
+            [host_video] => 
+            [participant_video] => 
+            [cn_meeting] => 
+            [in_meeting] => 
+            [join_before_host] => 
+            [jbh_time] => 0
+            [mute_upon_entry] => 
+            [watermark] => 
+            [use_pmi] => 
+            [approval_type] => 2
+            [audio] => voip
+            [auto_recording] => none
+            [enforce_login] => 
+            [enforce_login_domains] => 
+            [alternative_hosts] => 
+            [alternative_host_update_polls] => 
+            [close_registration] => 
+            [show_share_button] => 
+            [allow_multiple_devices] => 
+            [registrants_confirmation_email] => 1
+            [waiting_room] => 
+            [request_permission_to_unmute_participants] => 
+            [registrants_email_notification] => 1
+            [meeting_authentication] => 
+            [encryption_type] => enhanced_encryption
+            [approved_or_denied_countries_or_regions] => stdClass Object
+                (
+                    [enable] => 
+                )
+
+            [breakout_room] => stdClass Object
+                (
+                    [enable] => 
+                )
+
+            [alternative_hosts_email_notification] => 1
+            [show_join_info] => 
+            [device_testing] => 
+            [focus_mode] => 
+            [enable_dedicated_group_chat] => 
+            [private_meeting] => 
+            [email_notification] => 1
+            [host_save_video_order] => 
+            [sign_language_interpretation] => stdClass Object
+                (
+                    [enable] => 
+                )
+
+            [email_in_attendee_report] => 
+        )
+
+    [pre_schedule] => 
+)

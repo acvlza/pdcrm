@@ -22,7 +22,7 @@ get_template_part($navigationEnabled ? 'navigation' : '');
             if (is_client_logged_in() && $subMenuEnabled && !isset($knowledge_base_search)) { ?>
                 <ul class="submenu customer-top-submenu">
                     <?php hooks()->do_action('before_customers_area_sub_menu_start'); ?>
-                    <li class="customers-top-submenu-files">
+               <!--     <li class="customers-top-submenu-files">
                         <a href="<?php echo site_url('clients/files'); ?>" class="tw-inline-flex tw-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="tw-w-5 tw-h-5 tw-mr-1">
@@ -45,7 +45,7 @@ get_template_part($navigationEnabled ? 'navigation' : '');
                                 <?php echo _l('calendar'); ?>
                             </span>
                         </a>
-                    </li>
+                    </li>-->
                     <?php hooks()->do_action('after_customers_area_sub_menu_end'); ?>
                 </ul>
                 <div class="clearfix"></div>

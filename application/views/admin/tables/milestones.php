@@ -20,6 +20,8 @@ $result = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $where, [
     'id',
     'milestone_order',
     'description',
+    'final_deliverables',
+    'approval',
     'description_visible_to_customer',
     'hide_from_customer',
 ]);
@@ -33,7 +35,7 @@ foreach ($rResult as $aRow) {
     $nameRow = $aRow['name'];
 
     if (staff_can('edit_milestones', 'projects')) {
-        $nameRow = '<a href="#" onclick="edit_milestone(this,' . $aRow['id'] . '); return false" data-name="' . $aRow['name'] . '" data-start_date="' . _d($aRow['start_date']) . '" data-due_date="' . _d($aRow['due_date']) . '" data-order="' . $aRow['milestone_order'] . '" data-description="' . htmlspecialchars(clear_textarea_breaks($aRow['description'])) . '" data-description-visible-to-customer="' . $aRow['description_visible_to_customer'] . '" data-hide-from-customer="' . $aRow['hide_from_customer'] . '">' . $nameRow . '</a>';
+        $nameRow = '<a href="#" onclick="edit_milestone(this,' . $aRow['id'] . '); return false" data-name="' . $aRow['name'] . '" data-start_date="' . _d($aRow['start_date']) . '" data-due_date="' . _d($aRow['due_date']) . '"data-final_deliverables="' . $aRow['final_deliverables'] . '"  data-approval="' . $aRow['approval'] . '" data-order="' . $aRow['milestone_order'] . '" data-description="' . htmlspecialchars(clear_textarea_breaks($aRow['description'])) . '" data-description-visible-to-customer="' . $aRow['description_visible_to_customer'] . '" data-hide-from-customer="' . $aRow['hide_from_customer'] . '">' . $nameRow . '</a>';
     }
 
     if (staff_can('delete_milestones', 'projects')) {

@@ -435,7 +435,7 @@ body.page-small #header {
 }
 
 .navbar-nav>li>.dropdown-menu.notifications li {
-    z-index: 100
+    z-index: 100;
 }
 
 .navbar-nav>li>.dropdown-menu.notifications li .media-body {
@@ -544,7 +544,9 @@ body.page-small #header {
 .sidebar .nav>li>a:focus .menu-icon,
 .sidebar .nav>li>a:hover .menu-icon,
 .sidebar li.active>a .menu-icon {
-    opacity: .99
+    opacity: .99;
+:
+    inherit;
 }
 
 .sidebar li .nav-second-level li a {

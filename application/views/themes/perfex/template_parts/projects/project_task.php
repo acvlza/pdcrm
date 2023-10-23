@@ -22,9 +22,43 @@
                             </a>
                             <?php } ?> <?php echo $view_task->name; ?>
                         </h3>
-                        <span class="task-single-status tw-ml-3 tw-mt-0.5">
-                            <?php echo format_task_status($view_task->status); ?>
+                         <?php 
+                            // Extract the task status
+                            $taskStatus = $view_task->status;
+
+                            $statusNames = [
+                                1 => "Not Started",
+                                2 => "Awaiting Feedback",
+                                3 => "Testing",
+                                4 => "In Progress",
+                                5 => "Completed",
+                            ];
+
+                            // Determine the label style based on the task status
+                            $labelStyles = "";  // Default style or no style
+                            switch ($taskStatus) {
+                                case 1:
+                                    $labelStyles = "label label-default"; // Bootstrap's "danger" label is red
+                                    break;
+                                case 2:
+                                    $labelStyles = "label label-info tw-ml-3"; // Bootstrap's "primary" label is blue
+                                    break;
+                                case 3:
+                                    $labelStyles = "label label-warning"; // Bootstrap's "warning" label is yellow
+                                    break;
+                                case 4:
+                                    $labelStyles = "label label-primary tw-ml-3"; // Bootstrap's "success" label is green
+                                    break;
+                                case 5:
+                                    $labelStyles = "label label-success"; // Custom class for purple
+                                    break;
+                            }
+                        ?>
+                        <span class="task-single-status tw-ml-3 tw-mt-0.5 <?php echo $labelStyles; ?>">
+                            <?php echo $statusNames[$taskStatus]; ?>
                         </span>
+
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="task-info pull-left no-p-left">
@@ -73,13 +107,13 @@
             </div>
             <?php if ($project->settings->view_team_members == 1) { ?>
             <div class="clearfix"></div>
-            <hr />
+            <hr style="border: 1px solid #323761;" />
             <div class="row mbot20">
-                <div class="col-md-3">
+                <div class="col-md-2" style="vertical-align: right;">
                     <i class="fa-regular fa-user"></i> <span
                         class="bold"><?php echo _l('task_single_assignees'); ?></span>
-                </div>
-                <div class="col-md-9" id="assignees">
+                    <br>
+                    <br>
                     <?php
                   $_assignees = '';
                   foreach ($view_task->assignees as $assignee) {
@@ -99,7 +133,7 @@
             <?php } ?>
             <?php if ($project->settings->view_task_checklist_items == 1) { ?>
             <?php if (count($view_task->checklist_items) > 0) { ?>
-            <hr />
+            <hr style="border: 1px solid #323761;" />
             <h4 class="bold mbot15"><?php echo _l('task_checklist_items'); ?></h4>
             <?php } ?>
             <?php foreach ($view_task->checklist_items as $list) { ?>
@@ -136,7 +170,7 @@
                // Add separator if custom fields found for output
                if (isset($custom_fields_found)) {?>
                 <div class="clearfix"></div>
-                <hr />
+                <hr style="border: 1px solid #323761;" />
                 <?php } ?>
             </div>
             <?php } ?>
@@ -147,7 +181,7 @@
             $i                               = 1;
             $show_more_link_task_attachments = hooks()->apply_filters('show_more_link_task_attachments_customers_area', 3);
             if (count($view_task->attachments) > 0) { ?>
-            <hr />
+            <hr style="border: 1px solid #323761;" />
             <div class="row task_attachments_wrapper">
                 <div class="col-md-12">
                     <h4 class="bold font-medium"><?php echo _l('task_view_attachments'); ?></h4>
@@ -256,14 +290,14 @@
             <?php } ?>
             <?php } ?>
             <?php if (!empty($view_task->description)) { ?>
-            <hr />
+            <hr style="border: 1px solid #323761;" />
             <h4 class="bold"><?php echo _l('task_view_description'); ?></h4>
             <div class="tc-content">
                 <?php echo $view_task->description; ?>
             </div>
             <?php } ?>
             <?php if ($project->settings->upload_on_tasks == 1) { ?>
-            <hr />
+          <!--  <hr />
             <?php echo form_open_multipart(site_url('clients/project/' . $project->id), ['class' => 'dropzone mtop15', 'id' => 'task-file-upload']); ?>
             <input type="file" name="file" multiple class="hide" />
             <input type="hidden" name="task_id" value="<?php echo $view_task->id; ?>" class="hide" />
@@ -275,9 +309,9 @@
                 </button>
                 <div id="dropbox-chooser-task"></div>
             </div>
-            <?php } ?>
+            <?php } ?>-->
             <?php if ($project->settings->view_task_comments == 1) { ?>
-            <hr />
+            <hr style="border: 1px solid #323761;" />
             <h4 class="bold mbot15"><?php echo _l('task_view_comments'); ?></h4>
             <?php
             if ($project->settings->comment_on_tasks == 1) {
@@ -361,7 +395,7 @@
                      echo check_for_links($comment['content']); ?>
                     </div>
                 </div>
-                <hr />
+                <hr style="border: 1px solid #323761;" />
             </div>
             <?php }
             }

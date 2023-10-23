@@ -31,6 +31,8 @@
                         <?php echo _l('client_go_to_dashboard'); ?>
                     </a>
                     <?php } ?>
+    
+
                     <?php echo form_open($this->uri->uri_string()); ?>
                     <button type="submit" name="invoicepdf" value="invoicepdf" class="btn btn-default action-button">
                         <i class='fa-regular fa-file-pdf'></i>
@@ -67,55 +69,32 @@
             <div class="row mtop20">
                 <div class="col-md-6 col-sm-6 transaction-html-info-col-left">
                     <h4 class="tw-font-semibold tw-text-neutral-700 invoice-html-number">
-                        <?php echo format_invoice_number($invoice->id); ?>
+                        Payment Confirmation 
                     </h4>
                     <address class="invoice-html-company-info tw-text-neutral-500 tw-text-normal">
-                        <?php echo format_organization_info(); ?>
+                       <?php echo format_invoice_number($invoice->id); ?>  
                     </address>
                     <?php hooks()->do_action('after_left_panel_invoicehtml', $invoice); ?>
                 </div>
                 <div class="col-sm-6 text-right transaction-html-info-col-right">
-                    <span class="tw-font-medium tw-text-neutral-700 invoice-html-bill-to">
-                        <?php echo _l('invoice_bill_to'); ?>
-                    </span>
-                    <address class="invoice-html-customer-billing-info tw-text-neutral-500 tw-text-normal">
-                        <?php echo format_customer_info($invoice, 'invoice', 'billing'); ?>
-                    </address>
-                    <!-- shipping details -->
-                    <?php if ($invoice->include_shipping == 1 && $invoice->show_shipping_on_invoice == 1) { ?>
-                    <span class="tw-font-medium tw-text-neutral-700 invoice-html-ship-to">
-                        <?php echo _l('ship_to'); ?>
-                    </span>
-                    <address class="invoice-html-customer-shipping-info tw-text-neutral-500 tw-text-normal">
-                        <?php echo format_customer_info($invoice, 'invoice', 'shipping'); ?>
-                    </address>
-                    <?php } ?>
-                    <p class="invoice-html-date tw-mb-0 tw-text-normal">
-                        <span class="tw-font-medium tw-text-neutral-700">
-                            <?php echo _l('invoice_data_date'); ?>
-                        </span>
-                        <?php echo _d($invoice->date); ?>
-                    </p>
-                    <?php if (!empty($invoice->duedate)) { ?>
-                    <p class="invoice-html-duedate tw-mb-0 tw-text-normal">
-                        <span class="tw-font-medium tw-text-neutral-700">
-                            <?php echo _l('invoice_data_duedate'); ?>
-                        </span>
-                        <?php echo _d($invoice->duedate); ?>
-                    </p>
-                    <?php } ?>
-                    <?php if ($invoice->sale_agent != 0 && get_option('show_sale_agent_on_invoices') == 1) { ?>
-                    <p class="invoice-html-sale-agent tw-mb-0 tw-text-normal">
-                        <span class="tw-font-medium tw-text-neutral-700"><?php echo _l('sale_agent_string'); ?>:</span>
-                        <?php echo get_staff_full_name($invoice->sale_agent); ?>
-                    </p>
-                    <?php } ?>
                     <?php if ($invoice->project_id != 0 && get_option('show_project_on_invoice') == 1) { ?>
-                    <p class="invoice-html-project tw-mb-0 tw-text-normal">
-                        <span class="tw-font-medium tw-text-neutral-700"><?php echo _l('project'); ?>:</span>
-                        <?php echo get_project_name_by_id($invoice->project_id); ?>
-                    </p>
-                    <?php } ?>
+                     <p class="invoice-html-project tw-mb-0 tw-text-normal">
+                     <span class="tw-font-medium tw-text-neutral-700" style="color: #9ba1c4 !important;"><?php echo _l('project'); ?>:</span>
+                    <span style="color: #9ba1c4 !important;"><?php echo get_project_name_by_id($invoice->project_id); ?></span>
+                    </p><?php } ?>
+
+                    <span class=" tw-text-neutral-700 invoice-html-bill-to" style="color: #9ba1c4 !important;">
+                        <?php echo _l('invoice_bill_to'); ?> : <?php echo format_customer_info($invoice, 'invoice', 'billing'); ?>
+                    </span>
+
+                   <p class="invoice-html-date tw-mb-0 tw-text-normal">
+    <span class="tw-font-medium tw-text-neutral-700" style="color: #9ba1c4 !important;">
+        <?php echo _l('invoice_data_date'); ?>
+    </span>
+    <span style="color: #9ba1c4 !important;"><?php echo _d($invoice->date); ?></span>
+</p>
+
+                    
                     <?php $pdf_custom_fields = get_custom_fields('invoice', ['show_on_pdf' => 1, 'show_on_client_portal' => 1]);
                foreach ($pdf_custom_fields as $field) {
                    $value = get_custom_field_value($invoice->id, $field['id'], 'invoice');
@@ -143,7 +122,7 @@
                 <div class="col-md-6 col-md-offset-6">
                     <table class="table text-right tw-text-normal">
                         <tbody>
-                            <tr id="subtotal">
+                            <tr id="subtotal" style="color:#9ba1c4 !important">
                                 <td>
                                     <span class="bold tw-text-neutral-700"><?php echo _l('invoice_subtotal'); ?></span>
                                 </td>
@@ -298,7 +277,7 @@
                $total_payments = count($invoice->payments);
 
                if ($total_payments > 0) { ?>
-                    <table class="table table-hover invoice-payments-table tw-mt-2.5">
+                    <table class="table table-hover invoice-payments-table tw-mt-2.5" style="color:#9ba1c4 !important">
                         <thead>
                             <tr>
                                 <th><?php echo _l('invoice_payments_table_number_heading'); ?></th>

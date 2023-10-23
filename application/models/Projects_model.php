@@ -559,6 +559,8 @@ class Projects_model extends App_Model
         $data['description']                     = nl2br($data['description']);
         $data['description_visible_to_customer'] = isset($data['description_visible_to_customer']) ? 1 : 0;
         $data['hide_from_customer']              = isset($data['hide_from_customer']) ? 1 : 0;
+        $data['final_deliverables']              = $data['final_deliverables'];
+        $data['approval']                        = $data['approval'];
 
         $this->db->insert(db_prefix() . 'milestones', $data);
         $insert_id = $this->db->insert_id();
@@ -589,6 +591,9 @@ class Projects_model extends App_Model
         $data['description']                     = nl2br($data['description']);
         $data['description_visible_to_customer'] = isset($data['description_visible_to_customer']) ? 1 : 0;
         $data['hide_from_customer']              = isset($data['hide_from_customer']) ? 1 : 0;
+        $data['final_deliverables']              = $data['final_deliverables'];
+        $data['approval']                        = $data['approval'];
+        
 
         $this->db->where('id', $id);
         $this->db->update(db_prefix() . 'milestones', $data);

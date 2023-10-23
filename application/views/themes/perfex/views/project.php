@@ -22,16 +22,23 @@
         </div>
         <?php } ?>
         <?php
-            echo '<span class="label project-status-' . $project_status['id'] . ' tw-ml-3" style="color:' . $project_status['color'] . ';border:1px solid ' . adjust_hex_brightness($project_status['color'], 0.4) . ';background: ' . adjust_hex_brightness($project_status['color'], 0.04) . ';">' . $project_status['name'] . '</span>';
+            $taskStatus = $project_status['id'];  // Get the project status id
+
+if ($taskStatus == 1) {
+    $labelStyles = 'label label-primary';
+} elseif ($taskStatus == 2) {
+    $labelStyles = 'label label-warning';
+} elseif ($taskStatus == 3) {
+    $labelStyles = 'label label-success';
+} else {
+    $labelStyles = '';  // Default, in case the taskStatus doesn't match any of the above
+}
+
+echo '<span class="' . $labelStyles . ' tw-ml-3">' . $project_status['name'] . '</span>';
+
        ?>
     </div>
-    <?php if ($project->settings->view_tasks == 1 && $project->settings->create_tasks == 1) { ?>
-    <a href="<?php echo site_url('clients/project/' . $project->id . '?group=new_task'); ?>"
-        class="btn btn-primary new-task">
-        <i class="fa-regular fa-plus tw-mr-1"></i>
-        <?php echo _l('new_task'); ?>
-    </a>
-    <?php } ?>
+
 </div>
 <div class="panel_s">
     <div class="panel-body">
@@ -40,3 +47,39 @@
         <?php get_template_part('projects/' . $group); ?>
     </div>
 </div>
+<script>
+function approve_contract(contract_id) {
+
+$.post("<?php echo site_url('video_library/client_video_requests/approve_contract'); ?>", {
+id: contract_id,
+}, function(result){
+	//alert(result);
+if(result == 'success'){
+alert('Document Approved');
+location.reload(); 
+//$('#ModalConfirm').modal('show');
+}else{
+alert('An error occured');
+//$('#ModalError').modal('show');
+}
+});
+}
+
+
+function revise_contract(contract_id) {
+	
+$.post("<?php echo site_url('video_library/client_video_requests/revise_contract'); ?>", {
+id: contract_id,
+}, function(result){
+	//alert(result);
+if(result == 'success'){
+alert('Document under Revision');
+location.reload(); 
+//$('#ModalConfirm').modal('show');
+}else{
+alert('An error occured');
+//$('#ModalError').modal('show');
+}
+});
+}
+</script>

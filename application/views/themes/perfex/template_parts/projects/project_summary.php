@@ -5,27 +5,26 @@
             class="tw-border tw-border-solid tw-border-neutral-200 tw-rounded-md hover:tw-bg-neutral-100
             <?php if ($status['id'] == 1) { ?>
             " style="
-                background-color: rgb(239, 246, 255);
-                border-color: rgb(191, 219, 254);
-                border-style: solid;
-                border-width: 1px;
-                color: rgb(37, 99, 235);
+               background-color: rgb(16,70,95, .20);
+    border-color: rgb(16,70,95, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    color: rgb(27,120,163);
             "
             <?php } elseif ($status['id'] == 2) { ?>
-            " style="
-                background-color: rgb(254, 252, 232);
-                border-color: rgb(254, 240, 138);
-                border-style: solid;
-                border-width: 1px;
-                color: rgb(202, 138, 4);
+            " style="background-color: rgba(101, 85, 16, 0.20);
+border-color: rgba(101, 85, 16, 0.20);
+border-style: solid;
+border-width: 1px;
+color: rgba(118, 99, 19, .84);
             "
             <?php } elseif ($status['id'] == 3) { ?>
             " style="
-                background-color: rgb(240, 253, 244);
-                border-color: rgb(187, 247, 208);
-                border-style: solid;
-                border-width: 1px;
-                color: rgb(22, 163, 74);
+                background-color: rgba(0, 113, 53, .20);
+border-color: rgba(0, 113, 53, .09);
+border-style: solid;
+border-width: 1px;
+color: rgba(0, 113, 53);
             "
             <?php } ?>
         >
@@ -36,9 +35,9 @@
                 </dt>
                 <div class="tw-flex tw-items-baseline tw-text-base tw-font-semibold tw-text-primary-600"
                     <?php if ($status['id'] == 1) { ?>
-                        style="color: rgb(37, 99, 235);"
+                        style="color: rgb(27,120,163);"
                     <?php } elseif ($status['id'] == 2) { ?>
-                        style="color: rgb(202, 138, 4);"
+                        style="color: rgba(118, 99, 19, .84);"
                     <?php } elseif ($status['id'] == 3) { ?>
                         style="color: rgb(22, 163, 74);"
                     <?php } ?>

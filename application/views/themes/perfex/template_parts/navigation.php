@@ -15,16 +15,21 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="theme-navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="customers-nav-item-edit-profile">
-                    <a href="<?php echo site_url('clients/Projects'); ?>"> Projects </a>
+                <?php hooks()->do_action('customers_navigation_start'); ?>
+                <?php foreach ($menu as $item_id => $item) { ?>
+                <li class="customers-nav-item-<?php echo $item_id; ?><?php echo $item['href'] === current_full_url() ? ' active' : ''; ?>"
+                    <?php echo _attributes_to_string(isset($item['li_attributes']) ? $item['li_attributes'] : []); ?>>
+                    <a href="<?php echo $item['href']; ?>"
+                        <?php echo _attributes_to_string(isset($item['href_attributes']) ? $item['href_attributes'] : []); ?>>
+                        <?php
+                     if (!empty($item['icon'])) {
+                         echo '<i class="' . $item['icon'] . '"></i> ';
+                     }
+                     echo $item['name'];
+                     ?>
+                    </a>
                 </li>
-                <li class="customers-nav-item-edit-profile">
-                    <a href="#"> Meetings </a>
-                </li>
-                <li class="customers-nav-item-edit-profile">
-                    <a href=""> Support </a>
-                </li>
-             
+                <?php } ?>
                 <?php hooks()->do_action('customers_navigation_end'); ?>
                 <?php if (is_client_logged_in()) { ?>
                 <li class="dropdown customers-nav-item-profile">
@@ -61,10 +66,46 @@
                             </a>
                         </li>
                         <?php } ?>
-                        
+                        <?php if (is_gdpr() && get_option('show_gdpr_in_customers_menu') == '1') { ?>
+                        <li class="customers-nav-item-announcements">
+                            <a href="<?php echo site_url('clients/gdpr'); ?>">
+                                <?php echo _l('gdpr_short'); ?>
+                            </a>
+                        </li>
+                        <?php } ?>
+                        <li class="customers-nav-item-announcements">
+                            <a href="<?php echo site_url('clients/announcements'); ?>">
+                                <?php echo _l('announcements'); ?>
+                                <?php if ($total_undismissed_announcements != 0) { ?>
+                                <span class="badge"><?php echo $total_undismissed_announcements; ?></span>
+                                <?php } ?>
+                            </a>
+                        </li>
                         <?php if (!is_language_disabled()) {
                          ?>
-                        
+                        <li class="dropdown-submenu pull-left customers-nav-item-languages">
+                            <a href="#" tabindex="-1">
+                                <?php echo _l('language'); ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="<?php if (get_contact_language() == '') {
+                             echo 'active';
+                         } ?>">
+                                    <a href="<?php echo site_url('clients/change_language'); ?>">
+                                        <?php echo _l('system_default_string'); ?>
+                                    </a>
+                                </li>
+                                <?php foreach ($this->app->get_available_languages() as $user_lang) { ?>
+                                <li <?php if (get_contact_language() == $user_lang) {
+                             echo 'class="active"';
+                         } ?>>
+                                    <a href="<?php echo site_url('clients/change_language/' . $user_lang); ?>">
+                                        <?php echo ucfirst($user_lang); ?>
+                                    </a>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </li>
                         <?php
                      } ?>
                         <li class="customers-nav-item-logout">

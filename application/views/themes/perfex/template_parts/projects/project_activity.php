@@ -21,7 +21,7 @@
                     <p class="text-muted mtop5"><?php echo $activity['additional_data']; ?></p>
                 </div>
             </div>
-            <hr class="hr-10" />
+            <hr class="hr-10" style="Border : 1px solid #323761" />
         </div>
         <?php } ?>
         <?php } ?>
