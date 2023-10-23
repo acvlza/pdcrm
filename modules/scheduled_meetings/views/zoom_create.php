@@ -206,7 +206,7 @@ echo '<!-- Start Modal -->
 </div>
 </div>
 <h5 class="modal-title text-primary" >'. _l('scheduled_meetings_scheduled').'</h5>
-<hr style ="border: 1px solid #323761;">
+<hr>
 <p>'. _l('scheduled_meetings_scheduled_on').' <b><span id="dateandtime">date and time</span></b></p>
 <p><b>'. _l('scheduled_meetings_attendees').':</b><span id="allattendees">Staff 1, Staff 2, Client 1.</span></p>
 </div>

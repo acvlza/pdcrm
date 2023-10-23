@@ -58,18 +58,18 @@ if (is_client_logged_in()){
 hooks()->add_action('customers_content_container_start','scheduled_meetings_add_meeting_modal');
 }
 function scheduled_meetings_add_meeting_modal(){
-$CI = &get_instance();  
+$CI = &get_instance();	
 $CI->load->model('projects_model');
  $CI->db->where('id', get_contact_user_id());
  $result = $CI->db->get(db_prefix() . 'contacts')->row();
  $userid = $result->userid;
 
 $where = ['clientid'=>$userid,];
-$projects = $CI->projects_model->get('', $where);   
+$projects = $CI->projects_model->get('', $where);	
 
-    
-//echo '<div class="col-md-12 pull-right"><a href="#" class="btn btn-primary tw-mb-2 sm:tw-mb-4 pull-right" style="background:#DEF163;border:1px solid #333300;color:#333300;" data-toggle="modal" data-target="#meetingModal"><i class="fa-regular fa-plus tw-mr-1"></i>'. _l('scheduled_meetings_schedule_meeting').'</a></div>'; 
-    
+	
+echo '<div class="col-md-12 pull-right"><a href="#" class="btn btn-primary tw-mb-2 sm:tw-mb-4 pull-right" style="background:#DEF163;border:1px solid #333300;color:#333300;" data-toggle="modal" data-target="#meetingModal"><i class="fa-regular fa-plus tw-mr-1"></i>'. _l('scheduled_meetings_schedule_meeting').'</a></div>';	
+	
 echo '<!-- Start Modal -->
 <div class="modal fade" id="meetingModal" tabindex="-1" role="dialog" aria-labelledby="meetingModalTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:500px;">
@@ -84,7 +84,7 @@ echo '<!-- Start Modal -->
 </div>
 
 <div class="clearfix"></div>
-<hr style="border: 1px solid #323761;" />
+<hr />
 
 <div class="row">
 <div class="col-md-12">
@@ -118,9 +118,9 @@ echo '<!-- Start Modal -->
 </select>
 </div>
 
-                                    <hr style="border: 1px solid #323761;" />
+									<hr>
                                     <h5 class="mfont-bold-medium-size"><?= _l('zmm_meeting_duration'); ?></h5>
-                                    <div class="form-group">
+									<div class="form-group">
                                         <div class="pull-left">
                                             <span><?= _l('zmm_hour'); ?></span>
                                             <select class="selectpicker" name="hours" id="hour">
@@ -139,7 +139,7 @@ echo '<!-- Start Modal -->
                                             </select>
                                         </div>
                                         <div class="timezone_parent pull-right">
-                                        <label for="timezones" id="timezones_label" class="control-label"><?php echo _l('zmm_timezone'); ?></label>
+										<label for="timezones" id="timezones_label" class="control-label"><?php echo _l('zmm_timezone'); ?></label>
                                             <select name="timezone" id="timezones" class="form-control selectpicker" data-live-search="true">
                                                 <?php foreach (get_timezones_list() as $key => $timezones) { ?>
                                                     <optgroup label="<?php echo $key; ?>">
@@ -153,7 +153,7 @@ echo '<!-- Start Modal -->
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <hr style="border: 1px solid #323761;" />
+                                    <hr>
 
 
 <?php
@@ -170,19 +170,14 @@ echo '
 
 </div>
 <div class="modal-footer">
-<button type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="bfont-size: 16px;
-background: rgb(44, 114, 243)
-font-weight: 500;
-line-height: 20px;
-border: 1px solid transparent;
-padding: 6px 12px;">'. _l('scheduled_meetings_schedule_meeting').'</button>
+<button type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="background:#DEF163;border-radius:2px;color:#333300;">'. _l('scheduled_meetings_schedule_meeting').'</button>
 </div>
 </div>
 </div>
 </div>
-<!-- End Modal -->';    
-    
-    
+<!-- End Modal -->';	
+	
+	
 echo '<!-- Start Modal -->
 <div class="modal fade" id="meetingModalConfirm" tabindex="-1" role="dialog" aria-labelledby="meetingModalConfirmTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -194,7 +189,7 @@ echo '<!-- Start Modal -->
 </div>
 </div>
 <h5 id="confirmation" class="modal-title text-primary" >'. _l('scheduled_meetings_scheduled').'</h5>
-<hr style="border: 1px solid #323761;" />
+<hr>
 <p>'. _l('scheduled_meetings_scheduled_on').' <b><span id="dateandtime">date and time</span></b></p>
 <p><b>'. _l('scheduled_meetings_attendees').':</b> <span id="allattendees">Staff 1, Staff 2, Client 1.</span></p>
 </div>
@@ -217,7 +212,7 @@ echo '<!-- Start Modal -->
 </div>
 </div>
 <h5 class="modal-title text-primary" >'. _l('scheduled_meetings_could_not_be_scheduled').'</h5>
-<hr style="border: 1px solid #323761;" />
+<hr>
 <p>'. _l('scheduled_meetings_notify_admin').'</p>
 </div>
 <div class="modal-footer">
@@ -226,8 +221,8 @@ echo '<!-- Start Modal -->
 </div>
 </div>
 </div>
-<!-- End Modal -->';        
-    
+<!-- End Modal -->';		
+	
 }
 
 
@@ -242,18 +237,12 @@ $site_url = $httpstr."://".$_SERVER['SERVER_NAME'].$uri;
     // Show menu item only if client is logged in
    // if (get_option('scheduled_meetings_enabled') == 1 && is_client_logged_in() ) {
     if (is_client_logged_in()){
-        
-            add_theme_menu_item('scheduled_meetings_modal', [
-            'name'     => '<i class="fa-regular fa-plus tw-mr-1"></i> '. _l('scheduled_meetings_schedule_meeting'),
-            'href'     => '#" data-toggle="modal" data-target="#meetingModal',
-             'position' => 1,
-        ]);
   
         add_theme_menu_item('scheduled_meetings', [
             'name'     => 'Meetings',
-            //'href'     => '#" data-toggle="modal" data-target="#meetingModal',
-            'href'     => site_url('scheduled_meetings/clients/meeting_list'),
-            'position' => 2,
+			//'href'     => '#" data-toggle="modal" data-target="#meetingModal',
+			'href'     => admin_url('scheduled_meetings/clients/meeting_list'),
+            'position' => 1,
         ]);
                 
     }
@@ -266,7 +255,7 @@ echo '<style>
 }
 
 if(!defined('SCHEDULED_MEETINGS_REG_PROD_POINT'))
-    define('SCHEDULED_MEETINGS_REG_PROD_POINT', 'https://lic.perfexsaas.co.za/scheduled_meetings');
+	define('SCHEDULED_MEETINGS_REG_PROD_POINT', 'https://lic.perfexsaas.co.za/scheduled_meetings');
 
 define('SCHEDULED_MEETINGS_VERSION', '1.0.0');
 
@@ -276,7 +265,7 @@ function scheduled_meetings_add_settings_tab()
 {
     $CI = &get_instance();
     $CI->app_tabs->add_settings_tab('scheduled_meetings-settings', [
-       'name'     => '<img style="width:32px;padding:0 10px 0 0;position:absolute;margin:0 35px 0 -35px;" src="'.site_url('modules/scheduled_meetings/assets/scheduled_meetings.png').'"/> Meetings Settings',
+       'name'     => '<img style="width:32px;padding:0 10px 0 0;position:absolute;margin:0 35px 0 -35px;" src="'.site_url('modules/scheduled_meetings/assets/scheduled_meetings.png').'"/>Meetings Settings',
        'icon'     => 'fa',
        'view'     => 'scheduled_meetings/scheduled_meetings_settings',
        'position' => 30,
@@ -290,14 +279,14 @@ echo '<script>
 $(document).ready(function() {
 $(".selectpicker").click(function(){
   // alert( $(".selectpicker").index(this) );
-}); 
-    
-var segment = $(location).attr("href").split("/").pop();    
+});	
+	
+var segment = $(location).attr("href").split("/").pop();	
 
 //if(segment == "createMeeting"){
-if(segment == "ZoomcreateMeeting"){ 
-$("#topic").val(localStorage.getItem("topic")); 
-$("#description").val(localStorage.getItem("agenda"));  
+if(segment == "ZoomcreateMeeting"){	
+$("#topic").val(localStorage.getItem("topic"));	
+$("#description").val(localStorage.getItem("agenda"));	
 $("#date").val(localStorage.getItem("date"));
 $("#reminder").val(localStorage.getItem("reminder"));
 
@@ -343,7 +332,7 @@ function scheduled_meetings_init_menu_items(){
     $CI  =&get_instance();
     
 $CI->app_menu->add_sidebar_menu_item('scheduled_meetings', [
-            'name'     => 'Scheduled Meetings',
+            'name'     => '<img style="width:32px;padding:0 10px 0 0;" src="'.site_url('modules/scheduled_meetings/assets/scheduled_meetings.png').'"/>Scheduled Meetings',
             'slug'     => 'scheduled_meetings_menu_items',
             'position' => 1, 
             'collapse' => true,
@@ -364,7 +353,7 @@ $CI->app_menu->add_sidebar_children_item('scheduled_meetings', [
             'position' => 2, 
             'href'     => admin_url('scheduled_meetings/new_meetings'),
             'icon'     => 'fa fa-clock', 
-        ]);     
+        ]);		
         
  $CI->app_menu->add_sidebar_children_item('scheduled_meetings', [
             'name'     => 'Cancelled',
@@ -395,15 +384,15 @@ $CI->app_menu->add_sidebar_children_item('scheduled_meetings', [
             'position' => 6, 
             'href'     => admin_url('scheduled_meetings/create_new_meeting'),
             'icon'     => 'fa fa-plus', 
-        ]);     
-        
+        ]);		
+		
 $CI->app_menu->add_sidebar_menu_item('scheduled_meetings_links', [
-            'name'     => 'Manage Link',
+            'name'     => '<img style="width:32px;padding:0 10px 0 0;" src="'.site_url('modules/scheduled_meetings/assets/scheduled_meetings.png').'"/>Manage Link',
             'slug'     => 'scheduled_meetings_menu_links',
             'position' => 2, 
             'collapse' => true,
             'icon'     => '', 
-        ]); 
+        ]);	
 $CI->app_menu->add_sidebar_children_item('scheduled_meetings_links', [
             'name'     => 'Overview',
             'slug'     => 'scheduled_meetings_link_list',
@@ -415,7 +404,7 @@ $CI->app_menu->add_sidebar_children_item('scheduled_meetings_links', [
             'name'     => 'Create Link Schedule',
             'slug'     => 'scheduled_meetings_create_link_schedule',
             'position' => 2,
-            //'href'     => admin_url('zoom_meeting_manager/index/createMeeting'),
+			//'href'     => admin_url('zoom_meeting_manager/index/createMeeting'),
             'href'     => admin_url('scheduled_meetings/ZoomcreateMeeting'),
             'icon'     => '', 
         ]);
@@ -425,7 +414,7 @@ $CI->app_menu->add_sidebar_children_item('scheduled_meetings_links', [
             'position' => 2, 
             'href'     => admin_url('settings?group=zoom-meeting-manager-settings'),
             'icon'     => '', 
-        ]);         
+        ]);  		
                   
 }                 
   
@@ -481,8 +470,8 @@ function scheduled_meetings_deregister($module_name)
 
 //########################################################################################
     function scheduled_meetings_activate($module)
-    {       error_reporting(-1);
-        ini_set('display_errors', 1);
+    {		error_reporting(-1);
+		ini_set('display_errors', 1);
     
         if (!option_exists($module['system_name'].'_verification_id') || empty(get_option($module['system_name'].'_verification_id'))) {
             $CI                   = &get_instance();

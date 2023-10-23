@@ -36,13 +36,13 @@ if(in_array(get_contact_user_id(),$contact_ids)){
 <span class="badge badge-inverse">10</span>	-->			
 				
 <?php if($meeting['status'] == 0){
-$status = '<span class="label label-warning">CANCELLED</span>';//cancelled
+$status = '<span class="badge badge-red">CANCELLED</span>';//cancelled
 }else if($meeting['status'] == 1){
-$status = '<span class="label label-primary">NEW</span>';//new
+$status = '<span class="badge badge-info">NEW</span>';//new
 }else if($meeting['status'] == 2){
-$status = '<span class="label label-success">UPCOMING</span>';//rescheduled
+$status = '<span class="badge badge-warning">UPCOMING</span>';//rescheduled
 }else{
-$status = '<span class="label label-warning">DONE</span>';//done
+$status = '<span class="badge badge-success">DONE</span>';//done
 }?>
                 <tr>
                     <td data-order="<?php echo $meeting['id']; ?>"><?php echo $meeting['meetingid']; ?></td>
@@ -50,8 +50,7 @@ $status = '<span class="label label-warning">DONE</span>';//done
 					<td data-order="<?php echo $meeting['topic']; ?>"><?php echo $meeting['topic']; ?></td>
 					<td data-order="<?php echo $meeting['category']; ?>"><?php echo $meeting['category']; ?></td>
 					<td data-order="<?php echo $meeting['status']; ?>"><?php echo $status; ?></td>
-					<td data-order="view_meeting"><a href="<?php echo admin_url('scheduled_meetings/clients/meeting_details/'.$meeting['id']);?>"><span class="label label-default" >View Meeting</span>
-</a></td>
+					<td data-order="view_meeting"><a href="<?php echo admin_url('scheduled_meetings/clients/meeting_details/'.$meeting['id']);?>"><span class="badge badge-purple">View Meeting</span></a></td>
                     <?php foreach ($custom_fields as $field) { ?>
                     <td><?php echo get_custom_field_value($meeting['id'], $field['id'], 'meeting'); ?></td>
                     <?php } ?>

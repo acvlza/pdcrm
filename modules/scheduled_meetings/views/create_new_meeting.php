@@ -24,7 +24,7 @@
                                     <div class="button-examples float-right" style="padding-top: 21px;margin-left:5px;">
 									<a href="<?php echo admin_url('scheduled_meetings/link_list');?>" class="btn btn-secondary btn-outline-primary pull-right mleft10">
                                     <i class="mdi mdi-arrow-left"></i> Back</a>
-                                        <a href="<?php echo admin_url('zoom_meeting_manager/index/createMeeting');?>"><button type="button" class="btn btn-primary waves-effect pull-right" style="background:#AA5">
+                                        <a href="<?php echo admin_url('zoom_meeting_manager/index/createMeeting');?>"><button type="button" class="btn btn-primary waves-effect pull-right" style="background:#AA55FF;color:#fff;">
                                                 <i class="mdi mdi mdi-file-document-box-plus-outline"></i> Create New Meeting
                                             </button>
                                         </a>
@@ -171,7 +171,7 @@
                                             <textarea class="form-control" id="notes" name="notes" rows="7"></textarea>
                                             <hr>
                                             <div style="padding-top: 11px;">
-                                            <button type="button" id= "schedule_button" class="btn badge-primary btn-outline-primary btn-lg  waves-effect waves-light pull-right"  data-toggle="modal" data-target="" style="background:"> <span class="float-left"> Schedule Meeting </span> </button>
+                                            <button type="button" id= "schedule_button" class="btn badge-primary btn-outline-primary btn-lg  waves-effect waves-light pull-right"  data-toggle="modal" data-target="" style="background:#AA55FF;color:#fff;"> <span class="float-left"> Schedule Meeting </span> </button>
                                             </div>
 
                                             <!-- Start Modal -->

@@ -45,5 +45,3 @@ $("#closeConfirm").click(function(){
 var domain = location.protocol + '//' + location.host;
 window.location.assign(domain + "/scheduled_meetings/clients/meeting_list")	;
 });
-
-

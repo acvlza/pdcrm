@@ -27,7 +27,7 @@ class Scheduled_meetings extends AdminController
 
 public function index()
 {
-if (!has_permission('scheduled_meetings', '', 'view') || !has_permission('scheduled_meetings', '', 'view_own') && !is_admin()) {access_denied('scheduled_meetings');}
+if (!has_permission('scheduled_meetings', '', 'view') || !has_permission('scheduled_meetings', '', 'view_own')) {access_denied('scheduled_meetings');}
 
 $this->db->where('status',0);
 $result = $this->db->get('scheduled_meetings')->num_rows();
@@ -57,7 +57,7 @@ $this->load->view('meetings_list',$data);
 
 public function create_new_meeting()
 {
-if (!has_permission('scheduled_meetings', '', 'view') || !has_permission('scheduled_meetings', '', 'view_own') && !is_admin()) {access_denied('scheduled_meetings');}
+if (!has_permission('scheduled_meetings', '', 'create')) {access_denied('scheduled_meetings');}
 
 $where=[];
 		$data = [

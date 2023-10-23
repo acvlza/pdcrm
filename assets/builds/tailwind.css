@@ -13777,6 +13777,17 @@ body.modal-open {
     color: #9ba1c4!important;
 }
 
+.bootstrap-selectprojects .btn {
+    font-size: 16.5px;
+    height: 34px;--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    --tw-shadow-colored: 0 1px 2px 0 var(
+    --tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    background-color: transparent !important;
+    border-color: #323761!important;;
+    color: #9ba1c4!important;
+}
+
 .bootstrap-select .dropdown-header+li a {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0

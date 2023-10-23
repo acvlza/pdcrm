@@ -26,7 +26,7 @@ span.sub-menu-text {
 }
 
 body .btn.dropdown-toggle {
-  background: #24344d !important;
+  background: transparent;
   border-color: #344561 !important;
 }
 
@@ -177,8 +177,8 @@ body .estimate-pipeline .btn.dropdown-toggle {
 }
 
 body {
-  background-color: #192231;
-  /* background: #192231; */
+  background-color: #000;
+  background: #192231;
   /* color: #fff; */
   overflow-x: hidden;
 }

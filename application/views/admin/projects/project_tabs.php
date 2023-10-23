@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="horizontal-scrollable-tabs tw-bg-white tw-shadow-sm tw-rounded-lg tw-px-3 tw-min-h-0">
+<div class="horizontal-scrollable-tabs tw-bg-white tw-shadow-sm tw-rounded-lg tw-px-3 tw-min-h-0" style="background-color: #24344d;">
     <div class="scroller arrow-left !tw-py-[18px] tw-mt-px tw-border-0"><i class="fa fa-angle-left"></i></div>
     <div class="scroller arrow-right !tw-py-[18px] tw-mt-px tw-border-0"><i class="fa fa-angle-right"></i></div>
     <div class="horizontal-tabs">
@@ -11,7 +11,7 @@
                 echo 'active ';
             } ?>project_tab_<?php echo $key; ?><?php if ($dropdown) {
                 echo ' nav-tabs-submenu-parent';
-            } ?> tw-py-2">
+            } ?> tw-py-2" style="background-color: transparent !important;">
                 <a data-group="<?php echo $key; ?>" role="tab" <?php if ($dropdown) { ?> data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true" class="dropdown-toggle" href="#"
                     id="dropdown_<?php echo $key; ?>" <?php } else { ?>

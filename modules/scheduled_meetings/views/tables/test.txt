@@ -2,19 +2,6 @@ Array
 (
     [0] => Array
         (
-            [meeting_date] => 
-            [meetingid] => 75047644760
-            [topic] => Zoom Meeting
-            [web_url] => https://us04web.zoom.us/wc/join/75047644760?pwd=zaRKgHPXWzddQoXHg8df2kOjMQaybr.1
-            [app_url] => https://us04web.zoom.us/j/75047644760?pwd=zaRKgHPXWzddQoXHg8df2kOjMQaybr.1
-            [category] => New Project
-            [status] => 1
-            [created_by] => Jane  Doe
-            [id] => 22
-        )
-
-    [1] => Array
-        (
             [meeting_date] => 2023-08-16 23:00
             [meetingid] => 74255575449
             [topic] => This is the topic
@@ -24,45 +11,6 @@ Array
             [status] => 1
             [created_by] => Portier Digital
             [id] => 19
-        )
-
-    [2] => Array
-        (
-            [meeting_date] => 2023-08-05 20:00
-            [meetingid] => 77696188696
-            [topic] => This is the topic
-            [web_url] => https://us04web.zoom.us/wc/join/77696188696?pwd=tpEXrojKSLC40SIWqJXd08eRbpiirP.1
-            [app_url] => https://us04web.zoom.us/j/77696188696?pwd=tpEXrojKSLC40SIWqJXd08eRbpiirP.1
-            [category] => Existing Project
-            [status] => 1
-            [created_by] => Jane  Doe
-            [id] => 20
-        )
-
-    [3] => Array
-        (
-            [meeting_date] => 2023-09-21 20:00
-            [meetingid] => 72729867076
-            [topic] => Test 
-            [web_url] => https://us04web.zoom.us/wc/join/72729867076?pwd=bW0Fvx2DDXgPSVypmUN7GBSFFASAKG.1
-            [app_url] => https://us04web.zoom.us/j/72729867076?pwd=bW0Fvx2DDXgPSVypmUN7GBSFFASAKG.1
-            [category] => Existing Project
-            [status] => 1
-            [created_by] => Jane  Doe
-            [id] => 23
-        )
-
-    [4] => Array
-        (
-            [meeting_date] => 2023-09-27 20:00
-            [meetingid] => 76530532403
-            [topic] => Sample
-            [web_url] => https://us04web.zoom.us/wc/join/76530532403?pwd=oSMFMUeG4IsVAMFtnaHKjB4wCj8a0I.1
-            [app_url] => https://us04web.zoom.us/j/76530532403?pwd=oSMFMUeG4IsVAMFtnaHKjB4wCj8a0I.1
-            [category] => New Project
-            [status] => 1
-            [created_by] => Jane  Doe
-            [id] => 24
         )
 
 )

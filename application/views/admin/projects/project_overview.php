@@ -5,7 +5,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="project-info tw-mb-0 tw-font-medium tw-text-base tw-tracking-tight">
+                        <p class="project-info tw-mb-0 tw-font-medium tw-text-base tw-tracking-tight" >
                             <?php echo _l('project_progress_text'); ?> <span
                                 class="tw-text-neutral-500"><?php echo $percent; ?>%</span>
                         </p>
@@ -211,7 +211,7 @@ if (count($custom_fields) > 0) { ?>
 					
 	<div class="col-md-6">				
     <div class="project-progress-bars tw-mb-3">
-        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3">
+        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3" style="    background-color: rgba(93, 91, 133, 0.56); border-color: #323761;">
             <div class="row">
                 <div class="col-md-9">
                     <p class="bold text-dark font-medium tw-mb-0">
@@ -245,7 +245,7 @@ if (count($custom_fields) > 0) { ?>
             <?php if ($project->deadline) { ?>
 			
     <div class="project-progress-bars tw-mb-3">
-        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3">
+        <div class="tw-rounded-md tw-border tw-border-solid tw-border-neutral-100 tw-bg-neutral-50 tw-py-2 tw-px-3" style="    background-color: rgba(93, 91, 133, 0.56); border-color: #323761;">
             <div class="row">
                 <div class="col-md-9">
                     <p class="bold text-dark font-medium tw-mb-0">

@@ -37,7 +37,7 @@ $project_name = $result->name;
 ?>
 <div class="form-group">
 <label>Related To Project</label><br />
-<label class="col-md-12" style="border:1px solid #323761;padding:6px 10px;border-radius:5px;"><a target="_blank" href="<?php echo site_url('clients/project/'.$meeting->project_id);?>"><?php echo $project_name;?></a></label>
+<label class="col-md-12" style="border:1px solid #E1E1E1;padding:6px 10px;border-radius:5px;"><a target="_blank" href="<?php echo site_url('clients/project/'.$meeting->project_id);?>"><?php echo $project_name;?></a></label>
 <!--<input type="text" id="project" name="project" class="form-control" value="" placeholder="">-->
 </div>
 <?php }?>
@@ -63,17 +63,7 @@ $project_name = $result->name;
 <div class="footer">
 <label>Zoom Link</label>
 <div class="clearfix"></div>
-<div class="col-sm-6"><a target="_blank" href="<?php echo $meeting->web_url;?>" type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="--tw-border-opacity: 1;
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-    background-color: rgba(75, 198, 255, 0.27);
-    border-color: rgba(75, 198, 255, 0.27);
-    color: #4BC6FF;"><?php echo _l('scheduled_meetings_join_web_url');?></a></div><div class="col-sm-6"><a target="_blank" href="<?php echo $meeting->app_url;?>" type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="--tw-border-opacity: 1;
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-    background-color: rgba(75, 198, 255, 0.27);
-    border-color: rgba(75, 198, 255, 0.27);
-    color: #4BC6FF;"><?php echo _l('scheduled_meetings_join_app_url');?></a></div>
+<div class="col-sm-6"><a target="_blank" href="<?php echo $meeting->web_url;?>" type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="background:#CBF5FB;border-radius:5px;color:#11C5DD;border:1px solid #11C5DD;"><?php echo _l('scheduled_meetings_join_web_url');?></a></div><div class="col-sm-6"><a target="_blank" href="<?php echo $meeting->app_url;?>" type="button" id="request_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="background:#CBF5FB;border-radius:5px;color:#11C5DD;border:1px solid #11C5DD;"><?php echo _l('scheduled_meetings_join_app_url');?></a></div>
 </div>
 </div>
 </div>
@@ -95,20 +85,20 @@ $project_name = $result->name;
 <div class="row">
 <div class="col-md-6">
 <label>Category</label>
-<span class="btn radius label-default btn-block"><?php echo $meeting->category;?></span> 
+<span class="btn radius badge-light-blue btn-block"><?php echo $meeting->category;?></span> 
 </div>
 
 <?php
 if($meeting->status == 0){
-$status = '<span class="btn radius label-warning btn-block">Cancelled</span>';//cancelled
+$status = '<span class="btn radius badge-light-pink btn-block">Cancelled</span>';//cancelled
 }else if($meeting->status == 1){
-$status = '<span class="btn radius label-success btn-block">New</span>';//new
+$status = '<span class="btn radius badge-light-green btn-block">New</span>';//new
 }else if($meeting->status == 2){
-$status = '<span class="btn radius label-info btn-block">Re-Scheduled</span>';//rescheduled
+$status = '<span class="btn radius badge-light-blue btn-block">Re-Scheduled</span>';//rescheduled
 }else if($meeting->status == 3){
-$status = '<span class="btn radius label-primary btn-block">Upcoming</span>';//upcoming
+$status = '<span class="btn radius badge-light-orange btn-block">Upcoming</span>';//upcoming
 }else if($meeting->status == 4){
-$status = '<span class="btn radius label-success btn-block">Done</span>';//done
+$status = '<span class="btn radius badge-light-green btn-block">Done</span>';//done
 }
 ?>
 
@@ -185,12 +175,9 @@ echo '<span class="square-badge '.$colors[$key].' btn-block">'.$N.$S.'</span>';
 <hr />
 
 <div class="footer">
-<div class="col-sm-4"><button type="button" id="edit_meeting" data-toggle="modal" data-target="#editMeetingModal" data-type="Edit" class="modify-meeting btn label-info waves-effect waves-light btn-block" style="--tw-border-opacity: 1; --tw-bg-opacity: 1; --tw-text-opacity: 1;
-    border-radius: 0.8rem;font-size:11px;"><?php echo _l('scheduled_meetings_edit_meeting');?></button></div>
-<div class="col-sm-4"><button type="button" id="reschedule_meeting" data-toggle="modal" data-target="#editMeetingModal" data-type="Reschedule" class="modify-meeting btn label-warning waves-effect waves-light btn-block" style="--tw-border-opacity: 1; --tw-bg-opacity: 1; --tw-text-opacity: 1;
-    border-radius: 0.8rem;font-size:11px;"><?php echo _l('scheduled_meetings_reschedule_meeting');?></button></div>
-<div class="col-sm-4"><button type="button" id="cancel_meeting" class="btn label-danger waves-effect waves-light btn-block" style="--tw-border-opacity: 1; --tw-bg-opacity: 1; --tw-text-opacity: 1;
-    border-radius: 0.8rem;font-size:11px;"><?php echo _l('scheduled_meetings_cancel_meeting');?></button></div>
+<div class="col-sm-4"><button type="button" id="edit_meeting" data-toggle="modal" data-target="#editMeetingModal" data-type="Edit" class="modify-meeting btn btn-primary waves-effect waves-light btn-block" style="background:#FBFDDF;border-radius:5px;color:#C0D220;border:1px solid #C0D220;font-size:11px;"><?php echo _l('scheduled_meetings_edit_meeting');?></button></div>
+<div class="col-sm-4"><button type="button" id="reschedule_meeting" data-toggle="modal" data-target="#editMeetingModal" data-type="Reschedule" class="modify-meeting btn btn-primary waves-effect waves-light btn-block" style="background:#FCEDD6;border-radius:5px;color:#F4B85E;border:1px solid #F4B85E;font-size:11px;"><?php echo _l('scheduled_meetings_reschedule_meeting');?></button></div>
+<div class="col-sm-4"><button type="button" id="cancel_meeting" class="btn btn-primary waves-effect waves-light btn-block" style="background:#FEE2E2;border-radius:5px;color:#F73D3D;border:1px solid #F73D3D;font-size:11px;"><?php echo _l('scheduled_meetings_cancel_meeting');?></button></div>
 </div>
 </div>
 </div>
